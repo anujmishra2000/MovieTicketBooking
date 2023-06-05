@@ -12,6 +12,7 @@ namespace :admin do
       puts "\nNew admin user created"
     else
       puts "\nFailed to save new admin user"
+      puts "Errors: #{u.errors.to_a}"
     end
   end
 end

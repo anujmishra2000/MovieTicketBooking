@@ -1,18 +1,21 @@
-default: &default
+---
+default:
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 development:
-  <<: *default
+  adapter: postgresql
   database: movie_booking_dev
-  username: postgres
-  password: Anuj.2000
+  encoding: unicode
   host: localhost
-  port: 5432
-production:
-  <<: *default
-  database: movie_booking_production
-  username: postgres
   password: Anuj.2000
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  port: 5432
+  username: postgres
+production:
+  adapter: postgresql
+  database: movie_booking_production
+  encoding: unicode
+  password: Anuj.2000
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
