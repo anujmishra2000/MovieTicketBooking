@@ -229,15 +229,15 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9.2)
-  importmap-rails
-  jbuilder
+  importmap-rails (~> 1.1.6)
+  jbuilder (~> 2.11.5)
   pg (~> 1.5.3)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   selenium-webdriver
-  sprockets-rails
-  stimulus-rails
-  turbo-rails
+  sprockets-rails (~> 3.4.2)
+  stimulus-rails (~> 1.2.1)
+  turbo-rails (~> 1.4.0)
   tzinfo-data
   web-console
   webdrivers
