@@ -74,6 +74,8 @@ group :test do
   gem 'webdrivers'
 end
 
-gem "cssbundling-rails", "~> 1.1"
+gem 'bootstrap', '~> 5.3.0.alpha3'
 
-gem "jsbundling-rails", "~> 1.1"
+gem 'cssbundling-rails', "~> 1.1"
+
+gem 'jsbundling-rails', "~> 1.1"
