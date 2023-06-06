@@ -30,4 +30,62 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  admin:
+    base:
+      denied_privilege: "You don't have privilege to access this section"
+
+  back: 'Back'
+
+  current_password: 'Current password'
+
+  devise:
+    confirmations:
+      new:
+        instructions: 'Resend confirmation instructions'
+    passwords:
+      edit:
+        confirm_new_password: 'Confirm new password'
+        instructions: 'Change your password'
+        new_password: 'New password'
+        submit: 'Change my password'
+      new:
+        instructions: 'Forgot your password?'
+        submit: 'Send me reset password instructions'
+    registrations:
+      edit:
+        cancel_account: 'Cancel my account'
+        header: "Edit %{resource_name}"
+        submit: 'Update'
+      new:
+        header: 'Sign up'
+        submit: 'Sign up'
+    sessions:
+      new:
+        header: 'Log In'
+        remember: 'Remember me'
+        submit: 'Log In'
+    unlocks:
+      new:
+        header: 'Resend unlock instructions'
+        submit: 'Resend unlock instructions'
+
+  movie:
+    index:
+      welcome: 'Welcome'
+
+  email: 'Email'
+
+  name: 'Name'
+
+  log_in: 'Log In'
+
+  log_out: 'Log Out'
+
+  password: 'Password'
+
+  password_confirmation: 'Password confirmation'
+
+  reset_password: 'Reset Password'
+
+  sign_up: 'Sign Up'
+
