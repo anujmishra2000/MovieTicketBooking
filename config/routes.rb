@@ -4,4 +4,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "movie#index", as: 'movie_index'
+
+  namespace :admin do
+    resources :theatres
+  end
 end

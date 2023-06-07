@@ -1,0 +1,28 @@
+<br><div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center"><%= theatre.name %></h5>
+          <p class="card-text">Screen Type: <%= theatre.screen_type %></p>
+          <p class="card-text">Seating Capacity: <%= theatre.seating_capacity %></p>
+          <p class="card-text">Operational: <%= theatre.operational? ? 'Yes' : 'No' %></p>
+          <p class="card-text">Contact Number: <%= theatre.contact_number %></p>
+          <p class="card-text">Contact Email: <%= theatre.contact_email %></p>
+          <td class="actions">
+            <div class="btn-group">
+              <% if action_name != 'show' %>
+                <%= link_to 'Show', admin_theatre_path(theatre), class: "btn btn-primary" %>
+              <% end %>
+              &nbsp
+              <%= link_to 'Edit', edit_admin_theatre_path(theatre), class: "btn btn-primary" %>
+              &nbsp
+              <%= button_to 'Destroy', admin_theatre_path(theatre), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+            </div>
+          </td>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>

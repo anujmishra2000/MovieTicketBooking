@@ -1,0 +1,18 @@
+<br>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="card-title text-center">New Theatre</h1>
+          <%= render "form", theatre: @theatre %>
+          <br>
+          <div class="text-center">
+            <%= link_to "Back to Theatres", admin_theatres_path, class: "btn btn-secondary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
