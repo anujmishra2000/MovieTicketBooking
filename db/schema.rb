@@ -20,10 +20,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_114839) do
     t.string "state", null: false
     t.integer "pincode", null: false
     t.bigint "theatre_id", null: false
-    t.bigint "address_id", null: false
+    t.bigint "country_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["address_id"], name: "index_addresses_on_address_id"
+    t.index ["country_id"], name: "index_addresses_on_country_id"
     t.index ["theatre_id"], name: "index_addresses_on_theatre_id"
   end
 
@@ -69,6 +69,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_114839) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  add_foreign_key "addresses", "addresses"
+  add_foreign_key "addresses", "countries"
   add_foreign_key "addresses", "theatres"
 end

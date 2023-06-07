@@ -1,22 +1,28 @@
-<br><div class="container">
+<div class="container">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title text-center"><%= theatre.name %></h5>
-          <p class="card-text">Screen Type: <%= theatre.screen_type %></p>
-          <p class="card-text">Seating Capacity: <%= theatre.seating_capacity %></p>
-          <p class="card-text">Operational: <%= theatre.operational? ? 'Yes' : 'No' %></p>
-          <p class="card-text">Contact Number: <%= theatre.contact_number %></p>
-          <p class="card-text">Contact Email: <%= theatre.contact_email %></p>
+          <h5 class="card-title text-center"><strong><%= theatre.name %></strong></h5>
+          <p class="card-text"><strong><%= t('screen_type') %></strong> <%= theatre.screen_type %></p>
+          <p class="card-text"><strong>Seating Capacity:</strong> <%= theatre.seating_capacity %></p>
+          <p class="card-text"><strong>Operational:</strong> <%= theatre.operational? ? 'Yes' : 'No' %></p>
+          <p class="card-text"><strong>Contact Number:</strong> <%= theatre.contact_number %></p>
+          <p class="card-text"><strong>Contact Email:</strong> <%= theatre.contact_email %></p>
+          <p class="card-text"><strong>Street:</strong> <%= theatre.address.street %></p>
+          <p class="card-text"><strong>City:</strong> <%= theatre.address.city %></p>
+          <p class="card-text"><strong>State:</strong> <%= theatre.address.state %></p>
+          <p class="card-text"><strong>Country Name:</strong> <%= theatre.address.country.name %></p>
+          <p class="card-text"><strong>Country ISO Code:</strong> <%= theatre.address.country.iso_code %></p>
+          <p class="card-text"><strong>Pincode:</strong> <%= theatre.address.pincode %></p>
           <td class="actions">
             <div class="btn-group">
               <% if action_name != 'show' %>
                 <%= link_to 'Show', admin_theatre_path(theatre), class: "btn btn-primary" %>
               <% end %>
-              &nbsp
+              &nbsp;
               <%= link_to 'Edit', edit_admin_theatre_path(theatre), class: "btn btn-primary" %>
-              &nbsp
+              &nbsp;
               <%= button_to 'Destroy', admin_theatre_path(theatre), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
             </div>
           </td>

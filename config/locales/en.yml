@@ -34,6 +34,15 @@ en:
     base:
       denied_privilege: "You don't have privilege to access this section"
 
+    theatres:
+      index:
+      create:
+        notice: 'Theatre was successfully created'
+      update:
+        notice: 'Theatre was successfully updated.'
+      destroy:
+        notice: 'Theatre was successfully destroyed.'
+
   back: 'Back'
 
   current_password: 'Current password'
