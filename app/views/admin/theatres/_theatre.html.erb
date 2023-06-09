@@ -3,27 +3,27 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title text-center"><strong><%= theatre.name %></strong></h5>
-          <p class="card-text"><strong><%= t('screen_type') %></strong> <%= theatre.screen_type %></p>
-          <p class="card-text"><strong>Seating Capacity:</strong> <%= theatre.seating_capacity %></p>
-          <p class="card-text"><strong>Operational:</strong> <%= theatre.operational? ? 'Yes' : 'No' %></p>
-          <p class="card-text"><strong>Contact Number:</strong> <%= theatre.contact_number %></p>
-          <p class="card-text"><strong>Contact Email:</strong> <%= theatre.contact_email %></p>
-          <p class="card-text"><strong>Street:</strong> <%= theatre.address.street %></p>
-          <p class="card-text"><strong>City:</strong> <%= theatre.address.city %></p>
-          <p class="card-text"><strong>State:</strong> <%= theatre.address.state %></p>
-          <p class="card-text"><strong>Country Name:</strong> <%= theatre.address.country.name %></p>
-          <p class="card-text"><strong>Country ISO Code:</strong> <%= theatre.address.country.iso_code %></p>
-          <p class="card-text"><strong>Pincode:</strong> <%= theatre.address.pincode %></p>
+          <h5 class="card-title text-center"><strong><%= theatre.name %></strong></h5><br>
+          <p class="card-text"><strong><%= t('screen_type') %>:</strong> <%= theatre.screen_type %></p>
+          <p class="card-text"><strong><%= t('seating_capacity') %>:</strong> <%= theatre.seating_capacity %></p>
+          <p class="card-text"><strong><%= t('operational') %>:</strong> <%= theatre.operational? ? 'Yes' : 'No' %></p>
+          <p class="card-text"><strong><%= t('contact_number') %>:</strong> <%= theatre.contact_number %></p>
+          <p class="card-text"><strong><%= t('contact_email') %>:</strong> <%= theatre.contact_email %></p>
+          <p class="card-text"><strong><%= t('street') %>:</strong> <%= theatre.address.street %></p>
+          <p class="card-text"><strong><%= t('city') %>:</strong> <%= theatre.address.city %></p>
+          <p class="card-text"><strong><%= t('state') %>:</strong> <%= theatre.address.state %></p>
+          <p class="card-text"><strong><%= t('country_name') %>:</strong> <%= theatre.address.country.name %></p>
+          <p class="card-text"><strong><%= t('country_iso') %>:</strong> <%= theatre.address.country.iso_code %></p>
+          <p class="card-text"><strong><%= t('pincode') %>:</strong> <%= theatre.address.pincode %></p>
           <td class="actions">
             <div class="btn-group">
               <% if action_name != 'show' %>
-                <%= link_to 'Show', admin_theatre_path(theatre), class: "btn btn-primary" %>
+                <%= link_to t('seating_capacity'), admin_theatre_path(theatre), class: "btn btn-primary" %>
               <% end %>
               &nbsp;
-              <%= link_to 'Edit', edit_admin_theatre_path(theatre), class: "btn btn-primary" %>
+              <%= link_to t('edit'), edit_admin_theatre_path(theatre), class: "btn btn-primary" %>
               &nbsp;
-              <%= button_to 'Destroy', admin_theatre_path(theatre), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+              <%= button_to t('destroy'), admin_theatre_path(theatre), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
             </div>
           </td>
         </div>

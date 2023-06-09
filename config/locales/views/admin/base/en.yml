@@ -1,0 +1,4 @@
+en:
+  admin:
+    base:
+      denied_privilege: "You don't have privilege to access this section"
