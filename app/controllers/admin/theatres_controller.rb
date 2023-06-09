@@ -34,12 +34,16 @@ class Admin::TheatresController < Admin::BaseController
   end
 
   def destroy
-      redirect_to admin_theatres_path, notice: (@theatre.destroy ? t('.success') : t('.failure'))
+    if @theatre.destroy
+      redirect_to admin_theatres_path, notice: t('.success')
+    else
+      redirect_to admin_theatres_path, alert: t('.failure')
+    end
   end
 
   private def set_theatre
     @theatre = Theatre.find_by(id: params[:id])
-    redirect_to admin_theatres_path, notice: t('.not_exist') if @theatre.nil?
+    redirect_to admin_theatres_path, alert: t('.not_exist') if @theatre.nil?
   end
 
   private def theatre_params
