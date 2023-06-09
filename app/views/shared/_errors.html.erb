@@ -1,0 +1,10 @@
+<div id="error_explanation">
+  <h2><strong><%= pluralize(resource.errors.count, "error") %>
+  prohibited this product from being saved:</strong></h2>
+
+  <ul>
+    <% resource.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>

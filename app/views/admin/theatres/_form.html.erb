@@ -1,26 +1,17 @@
 <div class="container-sm">
   <%= form_with(model: [:admin,@theatre], local: true, class: "form") do |form| %>
     <% if @theatre.errors.any? %>
-    <div id="error_explanation">
-      <h2><strong><%= pluralize(@theatre.errors.count, "error") %>
-      prohibited this product from being saved:</strong></h2>
-
-      <ul>
-        <% @theatre.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <%= render 'shared/errors', resource: @theatre %>
   <% end %>
 
     <div class="form-group">
       <strong><%= form.label :name %></strong>
-      <%= form.text_field :name, class: "form-control" %>
+    <%= form.text_field :name, autofocus: true, class: "form-control" %>
     </div><br>
 
     <div class="form-group">
       <strong><%= form.label :screen_type, class: "form-label" %></strong>
-      <%= form.select :screen_type, ['IMAX', 'HD', '4K ULTRA'], { prompt: 'Select Screen Type' }, class: "form-select" %>
+      <%= form.select :screen_type, Theatre.screen_types.keys, { prompt: 'Select Screen Type' }, class: "form-select" %>
     </div><br>
 
     <div class="form-group">
@@ -62,7 +53,7 @@
       </div><br>
       <div class="form-group">
         <strong><%= address_form.label :country_id, class: "form-label" %></strong>
-        <%= address_form.select :country_id, Country.order(:name).map { |country| [country.name, country.id] }, { prompt: 'Select Country' }, class: "form-select" %>
+        <%= address_form.select :country_id, Country.pluck(:name, :id), { prompt: 'Select Country' }, class: "form-select" %>
       </div><br>
     <% end %>
 

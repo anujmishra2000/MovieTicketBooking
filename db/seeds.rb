@@ -7,5 +7,5 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
   Country.delete_all
-  Country.create!(name: 'India', iso_code: 'IN91')
-  Country.create!(name: 'Russia', iso_code: 'RS92')
+  Country.create!(id: 1, name: 'India', iso_code: 'IN91')
+  Country.create!(id: 2, name: 'Russia', iso_code: 'RS92')

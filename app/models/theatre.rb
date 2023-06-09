@@ -4,11 +4,12 @@ class Theatre < ApplicationRecord
 
   validates :name, :screen_type, :seating_capacity, :contact_number, :contact_email, presence: true
   validates :contact_email, uniqueness: { case_sensitive: false }, email: true
+  validates :seating_capacity, numericality: { only_integer: true }, allow_blank: true
 
   enum screen_type: {
-    'IMAX' => 0,
-    'HD' => 1,
-    '4K ULTRA' => 2
+    IMAX: 0,
+    HD: 1,
+    '4K_ULTRA': 2
   }
 
 end
