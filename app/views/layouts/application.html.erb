@@ -19,11 +19,15 @@
 
         <!-- Navbar items on the left -->
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link text-bg-dark" href="#">Movies</a>
+        <li class="nav-item">
+          <%= link_to movie_index_path, class: "nav-link text-bg-dark" do %>
+              Movies
+            <% end %>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-bg-dark" href="#">Theatres</a>
+            <%= link_to admin_theatres_path, class: "nav-link text-bg-dark" do %>
+              Theatres
+            <% end %>
           </li>
           <li class="nav-item">
             <a class="nav-link text-bg-dark" href="#">Shows</a>

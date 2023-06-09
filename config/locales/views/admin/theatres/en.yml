@@ -1,0 +1,17 @@
+---
+en:
+  admin:
+    theatres:
+      back: 'Back to Theatres'
+      create:
+        success: Theatre was successfully created
+      destroy:
+        failure: Theatre was not destroyed.
+        success: Theatre was successfully destroyed.
+      edit: 'Edit Theatre'
+      index:
+      new: 'New Theatre'
+      not_exist: Theatre does not exit
+      title: 'Theatres'
+      update:
+        success: Theatre was successfully updated.

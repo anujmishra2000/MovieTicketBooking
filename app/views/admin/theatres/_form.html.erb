@@ -1,0 +1,64 @@
+<div class="container-sm">
+  <%= form_with(model: [:admin,@theatre], local: true, class: "form") do |form| %>
+    <% if @theatre.errors.any? %>
+    <%= render 'shared/errors', resource: @theatre %>
+  <% end %>
+
+    <div class="form-group">
+      <strong><%= form.label :name, t(:name) %></strong>
+    <%= form.text_field :name, autofocus: true, class: "form-control" %>
+    </div><br>
+
+    <div class="form-group">
+      <strong><%= form.label :screen_type, t(:screen_type), class: "form-label" %></strong>
+      <%= form.select :screen_type, Theatre.screen_types.keys, { prompt: 'Select Screen Type' }, class: "form-select" %>
+    </div><br>
+
+    <div class="form-group">
+      <strong><%= form.label :seating_capacity, t(:seating_capacity) %></strong>
+      <%= form.number_field :seating_capacity, class: "form-control" %>
+    </div><br>
+
+    <div class="form-group">
+      <strong><%= form.label :operational, t(:operational) %></strong>
+      <%= form.check_box :operational, class: "form-check-input" %>
+    </div><br>
+
+    <div class="form-group">
+      <strong><%= form.label :contact_number, t(:contact_number) %></strong>
+      <%= form.text_field :contact_number, class: "form-control" %>
+    </div><br>
+
+    <div class="form-group">
+      <strong><%= form.label :contact_email, t(:contact_email) %></strong>
+      <%= form.text_field :contact_email, class: "form-control" %>
+    </div><br>
+
+    <%= form.fields_for :address do |address_form| %>
+      <div class="form-group">
+        <strong><%= address_form.label :street, t(:street), class: "form-label" %></strong>
+        <%= address_form.text_field :street, class: "form-control" %>
+      </div><br>
+      <div class="form-group">
+        <strong><%= address_form.label :city, t(:city), class: "form-label" %></strong>
+        <%= address_form.text_field :city, class: "form-control" %>
+      </div><br>
+      <div class="form-group">
+        <strong><%= address_form.label :state, t(:state), class: "form-label" %></strong>
+        <%= address_form.text_field :state, class: "form-control" %>
+      </div><br>
+      <div class="form-group">
+        <strong><%= address_form.label :pincode, t(:pincode), class: "form-label" %></strong>
+        <%= address_form.number_field :pincode, class: "form-control" %>
+      </div><br>
+      <div class="form-group">
+        <strong><%= address_form.label :country_id, t(:country), class: "form-label" %></strong>
+        <%= address_form.select :country_id, Country.pluck(:name, :id), { prompt: 'Select Country' }, class: "form-select" %>
+      </div><br>
+    <% end %>
+
+    <div class="text-center">
+      <%= form.submit t(:submit), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

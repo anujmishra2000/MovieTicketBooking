@@ -1,0 +1,31 @@
+en:
+  devise:
+    confirmations:
+      new:
+        instructions: 'Resend confirmation instructions'
+    passwords:
+      edit:
+        confirm_new_password: 'Confirm new password'
+        instructions: 'Change your password'
+        new_password: 'New password'
+        submit: 'Change my password'
+      new:
+        instructions: 'Forgot your password?'
+        submit: 'Send me reset password instructions'
+    registrations:
+      edit:
+        cancel_account: 'Cancel my account'
+        header: "Edit %{resource_name}"
+        submit: 'Update'
+      new:
+        header: 'Sign up'
+        submit: 'Sign up'
+    sessions:
+      new:
+        header: 'Log In'
+        remember: 'Remember me'
+        submit: 'Log In'
+    unlocks:
+      new:
+        header: 'Resend unlock instructions'
+        submit: 'Resend unlock instructions'

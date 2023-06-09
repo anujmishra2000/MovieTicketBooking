@@ -1,0 +1,48 @@
+<div class="container"><br><br>
+  <h2 class="text-center"><%=t('admin.theatres.title')%></h2>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <h2></h2>
+    <%= link_to t('admin.theatres.new'), new_admin_theatre_path, class: "btn btn-primary float-end" %>
+  </div><br>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= t(:name) %></th>
+        <th><%= t(:operational) %></th>
+        <th><%= t(:contact_number) %></th>
+        <th><%= t(:contact_email) %></th>
+        <th><%= t(:actions) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @theatres.each do |theatre| %>
+        <tr>
+          <td><%= theatre.name %></td>
+          <td><%= theatre.operational? ? 'Yes' : 'No' %></td>
+          <td><%= theatre.contact_number %></td>
+          <td><%= theatre.contact_email %></td>
+          <td>
+            <div class="btn-group">
+              <% if action_name != 'show' %>
+                <%= link_to admin_theatre_path(theatre), class: "btn btn-primary" do %>
+                  <i class="bi bi-eye"></i>
+                <% end %>
+              <% end %>&nbsp
+              <%= link_to edit_admin_theatre_path(theatre), class: "btn btn-primary" do %>
+                <i class="bi bi-pencil"></i>
+              <% end %>&nbsp
+              <%= button_to admin_theatre_path(theatre), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex justify-content-center">
+  <%= will_paginate @theatres %>
+</div>

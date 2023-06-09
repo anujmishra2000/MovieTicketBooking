@@ -1,0 +1,13 @@
+<div class="container-md">
+  <%= link_to t('admin.theatres.back'), admin_theatres_path, class: "btn btn-secondary position-absolute top-1 start-1 mt-2 ms-2" %>
+  <br>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card-body">
+        <%= render @theatre %>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
