@@ -1,6 +1,7 @@
-<div id="error_explanation">
-  <h2><strong><%= pluralize(resource.errors.count, "error") %>
-  prohibited this product from being saved:</strong></h2>
+<div id="error_explanation" class="alert alert-danger">
+  <h5 class="fw-bold">
+    <strong><%= pluralize(resource.errors.count, "error") %> prohibited this product from being saved:</strong>
+  </h5>
 
   <ul>
     <% resource.errors.full_messages.each do |message| %>

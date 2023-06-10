@@ -1,0 +1,17 @@
+---
+en:
+  admin:
+    movies:
+      back: 'Back to Movies'
+      create:
+        success: Movie was successfully created
+      destroy:
+        failure: Movie was not destroyed.
+        success: Movie was successfully destroyed.
+      edit: 'Edit Movie'
+      index:
+      new: 'New Movie'
+      not_exist: Movie does not exit
+      title: 'Movies'
+      update:
+        success: Movie was successfully updated.
