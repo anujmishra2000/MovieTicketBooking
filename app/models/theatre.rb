@@ -1,4 +1,6 @@
 class Theatre < ApplicationRecord
+  has_many :shows
+  has_many :movies, through: :shows
   has_one :address, dependent: :destroy
   accepts_nested_attributes_for :address, allow_destroy: true, update_only: true
 

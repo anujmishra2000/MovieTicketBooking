@@ -1,0 +1,48 @@
+<div class="container"><br><br>
+  <h2 class="text-center"><%=t('admin.shows.title')%></h2>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <h2></h2>
+    <%= link_to t('admin.shows.new'), new_admin_show_path, class: "btn btn-primary float-end" %>
+  </div><br>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= t(:theatre) %></th>
+        <th><%= t(:movie) %></th>
+        <th><%= t(:start_time) %></th>
+        <th><%= t(:end_time) %></th>
+        <th><%= t(:status) %></th>
+        <th><%= t(:action) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @shows.each do |show| %>
+        <tr>
+          <td><%= Theatre.find_by(id: show.theatre_id).name %></td>
+          <td><%= Movie.find_by(id: show.movie_id).title %></td>
+          <td><%= show.start_time %></td>
+          <td><%= show.end_time %></td>
+          <td><%= show.status.humanize.upcase %></td>
+          <td>
+            <div class="btn-group">
+              <%= link_to admin_show_path(show), class: "btn btn-primary" do %>
+                <i class="bi bi-eye"></i>
+              <% end %>&nbsp
+              <%= link_to edit_admin_show_path(show), class: "btn btn-primary" do %>
+                <i class="bi bi-pencil"></i>
+              <% end %>&nbsp
+              <%= button_to admin_show_path(show), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex justify-content-center">
+  <%= will_paginate @shows, class: 'digg_pagination' %>
+</div>

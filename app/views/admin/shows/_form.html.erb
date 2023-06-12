@@ -1,0 +1,36 @@
+<div class="container-sm">
+  <%= form_with(model: [:admin, @show], local: true, class: "form") do |form| %>
+    <% if @show.errors.any? %>
+      <%= render 'shared/errors', resource: @show %>
+    <% end %>
+
+    <div class="form-group">
+      <strong><%= form.label :theatre_id, t(:theatre), class: "form-label" %></strong>
+      <%= form.select :theatre_id, Theatre.where(operational: true).pluck(:name, :id), { prompt: 'Select Theatre' }, class: "form-select" %>
+    </div><br>
+
+    <div class="form-group">
+      <strong><%= form.label :movie_id, t(:movie), class: "form-label" %></strong>
+      <%= form.select :movie_id, Movie.where(status: 'Live').pluck(:title, :id), { prompt: 'Select Movie' }, class: "form-select" %>
+    </div><br>
+
+    <div class="form-group">
+      <strong><%= form.label :start_time, t(:start_time) %>:</strong>
+      <%= form.datetime_field :start_time, class: "form-control", required: true %>
+    </div><br>
+
+    <div class="form-group">
+      <strong><%= form.label :price, t(:price) %>:</strong>
+      <%= form.number_field :price, class: "form-control", required: true %>
+    </div><br>
+
+    <div class="form-group">
+      <strong><%= form.label :status, t(:status), class: "form-label" %>:</strong>
+      <%= form.select :status, Show.statuses.keys, { prompt: 'Select Screen Type' }, class: "form-select", required: true %>
+    </div><br>
+
+    <div class="text-center">
+      <%= form.submit t(:submit), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

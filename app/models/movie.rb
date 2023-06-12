@@ -1,4 +1,6 @@
 class Movie < ApplicationRecord
+  has_many :shows
+  has_many :theatres, through: :shows
   has_one_attached :poster
 
   validates :title, :release_date, :description, :duration_in_mins, :status, :poster, presence: true
