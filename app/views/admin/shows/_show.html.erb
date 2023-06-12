@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <h5 class="card-title"><strong><%= t(:theatre) %>:</strong> <%= Theatre.find_by(id: show.theatre_id).name %></h5>
+              <p class="card-text"><strong><%= t(:movie) %>:</strong> <%= Movie.find_by(id: show.movie_id).title %></p>
+              <p class="card-text"><strong><%= t(:start_time) %>:</strong> <%= show.start_time %></p>
+              <p class="card-text"><strong><%= t(:end_time) %>:</strong> <%= show.end_time %></p>
+              <p class="card-text"><strong><%= t(:status) %>:</strong> <%= show.status.humanize.upcase %></p>
+            </div>
+          </div>
+          <div class="row justify-content-end">
+            <div class="col-auto">
+              <div class="btn-group">
+                <% if show_button %>
+                  <%= link_to t(:show), admin_show_path(show), class: "btn btn-primary" %>
+                <% end %>&nbsp;
+                <%= link_to t(:edit), edit_admin_show_path(show), class: "btn btn-primary" %>&nbsp;
+                <%= button_to t(:destroy), admin_show_path(show), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+</div>

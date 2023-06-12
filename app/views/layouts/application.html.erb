@@ -19,9 +19,9 @@
 
         <!-- Navbar items on the left -->
         <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <%= link_to admin_movies_path, class: "nav-link text-bg-dark" do %>
-              Movies
+          <li class="nav-item">
+            <%= link_to admin_movies_path, class: "nav-link text-bg-dark" do %>
+                Movies
             <% end %>
           </li>
           <li class="nav-item">
@@ -30,7 +30,9 @@
             <% end %>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-bg-dark" href="#">Shows</a>
+            <%= link_to admin_shows_path, class: "nav-link text-bg-dark" do %>
+              Shows
+            <% end %>
           </li>
         </ul>
 
