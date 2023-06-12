@@ -1,7 +1,6 @@
 class Admin::ShowsController < Admin::BaseController
   before_action :set_show, only: [:show, :edit, :update, :destroy]
 
-
   def index
     @shows = Show.all.paginate(page: params[:page], per_page: ENV['per_page'])
   end
