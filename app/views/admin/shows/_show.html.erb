@@ -15,7 +15,7 @@
           <div class="row justify-content-end">
             <div class="col-auto">
               <div class="btn-group">
-                <% if show_button %>
+                <% if local_assigns[:show_button] %>
                   <%= link_to t(:show), admin_show_path(show), class: "btn btn-primary" %>
                 <% end %>&nbsp;
                 <%= link_to t(:edit), edit_admin_show_path(show), class: "btn btn-primary" %>&nbsp;
