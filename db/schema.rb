@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_09_123510) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_12_071229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,6 +70,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_123510) do
     t.integer "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_movies_on_title", unique: true
+  end
+
+  create_table "shows", force: :cascade do |t|
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.decimal "price", null: false
+    t.integer "status", null: false
+    t.bigint "theatre_id", null: false
+    t.bigint "movie_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id"], name: "index_shows_on_movie_id"
+    t.index ["theatre_id"], name: "index_shows_on_theatre_id"
   end
 
   create_table "theatres", force: :cascade do |t|
@@ -81,6 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_123510) do
     t.string "contact_email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_theatres_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -111,4 +126,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_123510) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "countries"
   add_foreign_key "addresses", "theatres"
+  add_foreign_key "shows", "movies"
+  add_foreign_key "shows", "theatres"
 end

@@ -25,10 +25,8 @@
           <td><%= movie.status %></td>
           <td>
             <div class="btn-group">
-              <% if action_name != 'show' %>
-                <%= link_to admin_movie_path(movie), class: "btn btn-primary" do %>
-                  <i class="bi bi-eye"></i>
-                <% end %>
+              <%= link_to admin_movie_path(movie), class: "btn btn-primary" do %>
+                <i class="bi bi-eye"></i>
               <% end %>&nbsp
               <%= link_to edit_admin_movie_path(movie), class: "btn btn-primary" do %>
                 <i class="bi bi-pencil"></i>

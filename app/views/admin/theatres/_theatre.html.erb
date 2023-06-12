@@ -17,7 +17,7 @@
           <p class="card-text"><strong><%= t(:pincode) %>:</strong> <%= theatre.address.pincode %></p>
           <td class="actions">
             <div class="btn-group">
-              <% if action_name != 'show' %>
+              <% if show_button %>
                 <%= link_to t(:show), admin_theatre_path(theatre), class: "btn btn-primary" %>
               <% end %>
               &nbsp;
