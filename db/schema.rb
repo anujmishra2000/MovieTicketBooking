@@ -95,7 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_071229) do
     t.string "contact_email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_theatres_on_name", unique: true
+    t.index ["name"], name: "index_theatres_on_name"
   end
 
   create_table "users", force: :cascade do |t|
