@@ -1,1 +1,1 @@
-DESCRIPTION_REGEX = /(\w+ ){20,}\w+ */
+DESCRIPTION_REGEX = /(\S+ ){19,}\S+ */

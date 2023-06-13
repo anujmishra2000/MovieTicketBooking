@@ -15,4 +15,11 @@ class Movie < ApplicationRecord
     Expired: 2
   }
 
+  def self.ransackable_associations(auth_object = nil)
+    ["poster_attachment", "poster_blob", "shows", "theatres"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["title"]
+  end
 end

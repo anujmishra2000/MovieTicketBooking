@@ -24,6 +24,7 @@ en:
   pincode: 'Pincode'
   reset_password: 'Reset Password'
   screen_type: 'Screen type'
+  search: 'Search'
   seating_capacity: 'Seating capacity'
   sign_up: 'Sign Up'
   start_time: 'Start Time'
