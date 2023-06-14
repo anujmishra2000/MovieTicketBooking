@@ -1,7 +1,8 @@
 class Theatre < ApplicationRecord
-  has_many :shows
+  has_many :shows, dependent: :restrict_with_error
   has_many :movies, through: :shows
   has_one :address, dependent: :destroy
+
   accepts_nested_attributes_for :address, allow_destroy: true, update_only: true
 
   validates :name, :screen_type, :seating_capacity, :contact_number, :contact_email, presence: true

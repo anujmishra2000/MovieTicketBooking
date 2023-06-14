@@ -16,11 +16,11 @@ class Show < ApplicationRecord
     self.start_time.strftime('%d-%h-%Y')
   end
 
-  protected def calculate_end_time
-    self.end_time = start_time + movie.duration_in_mins.minutes
+  private def calculate_end_time
+    end_time = start_time + movie.duration_in_mins.minutes
   end
 
-  protected def no_overlapping_shows
+  private def no_overlapping_shows
     overlapping_shows = theatre.shows.where.not(id: id).where('(start_time, end_time) OVERLAPS (?, ?)', start_time, end_time)
     return unless overlapping_shows.exists?
     errors.add(:base, 'There is an overlapping show in the same theater.')

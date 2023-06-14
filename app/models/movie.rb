@@ -1,5 +1,5 @@
 class Movie < ApplicationRecord
-  has_many :shows
+  has_many :shows, dependent: :restrict_with_error
   has_many :theatres, through: :shows
   has_one_attached :poster
 
