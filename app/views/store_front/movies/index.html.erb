@@ -6,7 +6,7 @@
         <div class="col-6">
           <%= search_form_for [:store_front, @q], remote: true, html: { class: 'form-inline' } do |f| %>
             <div class="input-group">
-              <%= f.search_field :title_cont, class: 'form-control', placeholder: 'Search Movie' %>
+              <%= f.search_field :title_or_description_cont, class: 'form-control', placeholder: 'Search Movie' %>
               <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">
                   <i class="bi bi-search"></i>

@@ -1,0 +1,7 @@
+---
+en:
+  store_front:
+    shows:
+      back: 'Back to MovieShows'
+      not_exist: Show does not exit
+      title: 'Shows'

@@ -1,8 +1,8 @@
 <div class="container-lg">
-  <%= link_to t('store_front.movies.back'), store_front_movies_path, class: "btn btn-secondary position-absolute top-1 start-1 mt-2 ms-2" %>
+  <%= link_to t('store_front.movies.back'), request.referrer, class: "btn btn-secondary position-absolute top-1 start-1 mt-2 ms-2" %>
   <br>
   <div class="row justify-content-center">
-    <div class="col-md-9">
+    <div class="col-md-12">
       <div class="card-body">
         <%= render @movie, show_button: false %>
         <br>
@@ -11,3 +11,66 @@
   </div>
 </div>
 <br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h2 class="text-center mb-4">Movie Shows</h2>
+
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <%= form_with url: store_front_movie_path(@movie), method: :get, html: { class: "mb-4" } do |form| %>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <%= form.label :from, "From:" %>
+                    <% if params[:from].blank? %>
+                      <%= form.date_field :from, class: "form-control", value: Time.current.strftime('%Y-%m-%d') %>
+                    <% else %>
+                      <%= form.date_field :from, class: "form-control", value: params[:from], required: true %>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <%= form.label :to, "To:" %>
+                    <% if params[:to].blank? %>
+                      <%= form.date_field :to, class: "form-control", value: 1.week.from_now.strftime('%Y-%m-%d') %>
+                    <% else %>
+                      <%= form.date_field :to, class: "form-control", value: params[:to], required: true %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <%= form.submit "Submit", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <% if @movie_theatre_shows.empty? %>
+        <div class="card">
+          <div class="card-body text-center">
+            <h5>No shows available</h5>
+          </div>
+        </div><br>
+      <% else %>
+        <%@movie_theatre_shows.each_pair do |theatre_id, shows| %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h4 class="card-title"><%= @movie_theatre_shows[theatre_id].first.theatre.name %></h4>
+              <% shows.sort_by!{|show|show.start_time}.each do |show| %>
+                <%= button_to store_front_movie_theatre_show_path(movie_id: @movie.id, theatre_id: theatre_id), method: :get, class: "btn btn-primary mb-1" do %>
+                  <%= show.date %>
+                  <%= show.start_time.strftime('%I:%M %p') %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

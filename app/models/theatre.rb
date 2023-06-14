@@ -10,9 +10,9 @@ class Theatre < ApplicationRecord
   validates :seating_capacity, numericality: { only_integer: true }, allow_blank: true
 
   enum screen_type: {
-    IMAX: 0,
-    HD: 1,
-    '4K_ULTRA': 2
+    'imax': 0,
+    'hd': 1,
+    '4k_ultra': 2
   }
 
 end

@@ -11,7 +11,7 @@
 
     <div class="form-group">
       <strong><%= form.label :movie_id, t(:movie), class: "form-label" %></strong>
-      <%= form.select :movie_id, Movie.where(status: 'Live').pluck(:title, :id), { prompt: 'Select Movie' }, class: "form-select" %>
+      <%= form.select :movie_id, Movie.where(status: :live).pluck(:title, :id), { prompt: 'Select Movie' }, class: "form-select" %>
     </div><br>
 
     <div class="form-group">

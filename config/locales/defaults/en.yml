@@ -9,6 +9,7 @@ en:
   country_name: 'Country name'
   current_password: 'Current password'
   date: 'Date'
+  denied_privilege: "You don't have privilege to access this section"
   description: 'Description'
   destroy: 'Destroy'
   duration_in_mins: 'Duration(minutes)'
