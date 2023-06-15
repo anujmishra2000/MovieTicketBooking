@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  scope module: 'store_front', as: 'store_front' do
+  scope module: :store_front do
     resources :movies, only: [:index, :show] do
       resources :theatres, only: [:show] do
         resources :shows, only: [:show]

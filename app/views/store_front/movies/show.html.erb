@@ -20,7 +20,7 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <%= form_with url: store_front_movie_path(@movie), method: :get, html: { class: "mb-4" } do |form| %>
+            <%= form_with url: movie_path(@movie), method: :get, html: { class: "mb-4" } do |form| %>
               <div class="row">
                 <div class="col">
                   <div class="form-group">
@@ -59,9 +59,9 @@
         <%@movie_theatre_shows.each_pair do |theatre_id, shows| %>
           <div class="card mb-3">
             <div class="card-body">
-              <h4 class="card-title"><%= @movie_theatre_shows[theatre_id].first.theatre.name %></h4>
+              <h4 class="card-title"><%= shows.first.theatre.name %></h4>
               <% shows.sort_by!{|show|show.start_time}.each do |show| %>
-                <%= button_to store_front_movie_theatre_show_path(movie_id: @movie.id, theatre_id: theatre_id), method: :get, class: "btn btn-primary mb-1" do %>
+                <%= button_to movie_theatre_show_path(movie_id: @movie.id, theatre_id: theatre_id), method: :get, class: "btn btn-primary mb-1" do %>
                   <%= show.date %>
                   <%= show.start_time.strftime('%I:%M %p') %>
                 <% end %>

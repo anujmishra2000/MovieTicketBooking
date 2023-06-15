@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-6">
-          <%= search_form_for [:store_front, @q], remote: true, html: { class: 'form-inline' } do |f| %>
+          <%= search_form_for @q, remote: true, html: { class: 'form-inline' } do |f| %>
             <div class="input-group">
               <%= f.search_field :title_or_description_cont, class: 'form-control', placeholder: 'Search Movie' %>
               <div class="input-group-append">
@@ -24,13 +24,12 @@
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5">
     <% @movies.each do |movie| %>
       <div class="col mb-4">
-        <%= button_to store_front_movie_path(movie), method: :get, remote: true, class: "btn btn-light card-link", form_class: "card" do %>
-  <%= image_tag movie.poster, class: "card-img-top", alt: movie.title %>
-  <div class="card-body">
-    <h6 class="card-title"><%= movie.title %></h6>
-  </div>
-<% end %>
-
+        <%= button_to movie_path(movie), method: :get, remote: true, class: "btn btn-light card-link", form_class: "card" do %>
+          <%= image_tag movie.poster, class: "card-img-top", alt: movie.title %>
+          <div class="card-body">
+            <h6 class="card-title"><%= movie.title %></h6>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>
