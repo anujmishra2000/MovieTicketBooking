@@ -25,21 +25,15 @@
                 <div class="col">
                   <div class="form-group">
                     <%= form.label :from, "From:" %>
-                    <% if params[:from].blank? %>
-                      <%= form.date_field :from, class: "form-control", value: Time.current.strftime('%Y-%m-%d') %>
-                    <% else %>
-                      <%= form.date_field :from, class: "form-control", value: params[:from], required: true %>
-                    <% end %>
+                    <% from_value = params[:from].blank? ? from_value = Time.current.strftime('%Y-%m-%d') : from_value = params[:from] %>
+                    <%= form.date_field :from, class: "form-control", value: from_value, required: true %>
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-group">
                     <%= form.label :to, "To:" %>
-                    <% if params[:to].blank? %>
-                      <%= form.date_field :to, class: "form-control", value: 1.week.from_now.strftime('%Y-%m-%d') %>
-                    <% else %>
-                      <%= form.date_field :to, class: "form-control", value: params[:to], required: true %>
-                    <% end %>
+                    <% to_value = params[:to].blank? ? to_value = 1.week.from_now.strftime('%Y-%m-%d') : to_value = params[:to] %>
+                    <%= form.date_field :to, class: "form-control", value: to_value, required: true %>
                   </div>
                 </div>
               </div>

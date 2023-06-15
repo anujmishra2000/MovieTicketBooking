@@ -1,5 +1,6 @@
 class Admin::ShowsController < Admin::BaseController
   before_action :set_show, only: [:show, :edit, :update, :destroy]
+  before_action :load_movies_and_theatres, only: [:edit, :new]
 
   def index
     @shows = Show.all.paginate(page: params[:page], per_page: ENV['per_page'])
@@ -38,6 +39,11 @@ class Admin::ShowsController < Admin::BaseController
     else
       redirect_to admin_shows_path, alert: t('.failure')
     end
+  end
+
+  private def load_movies_and_theatres
+    @live_movies = Movie.where(status: :live).pluck(:title, :id)
+    @operational_theatres = Theatre.where(operational: true).pluck(:name, :id)
   end
 
   private def set_show

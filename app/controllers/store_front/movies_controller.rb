@@ -1,6 +1,6 @@
 module StoreFront
   class MoviesController < StoreFront::BaseController
-    before_action :set_movie, only: [:show, :edit, :update, :destroy]
+    before_action :set_movie, only: :show
     skip_before_action :authenticate_user!
 
     def index
@@ -16,7 +16,8 @@ module StoreFront
 
     private def set_movie
       @movie = Movie.find_by(id: params[:id])
-      redirect_to admin_movies_path, alert: t('.not_exist') if @movie.nil?
+      return unless @movie.nil?
+      redirect_to movies_path, alert: t(:not_exist)
     end
   end
 end

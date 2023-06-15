@@ -1,5 +1,6 @@
 class Admin::TheatresController < Admin::BaseController
   before_action :set_theatre, only: [:show, :edit, :update, :destroy]
+  before_action :load_countries, only: [:edit, :new]
 
   def index
     @theatres = Theatre.all.paginate(page: params[:page], per_page: ENV['per_page'])
@@ -39,6 +40,10 @@ class Admin::TheatresController < Admin::BaseController
     else
       redirect_to admin_theatres_path, alert: t('.failure')
     end
+  end
+
+  private def load_countries
+    @countries = Country.pluck(:name, :id)
   end
 
   private def set_theatre

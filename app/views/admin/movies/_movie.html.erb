@@ -13,7 +13,7 @@
               <p><strong><%= t(:release_date) %>:</strong> <%= movie.release_date %></p>
               <p><strong><%= t(:description) %>:</strong> <%= movie.description %></p>
               <p><strong><%= t(:duration_in_mins) %>:</strong> <%= movie.duration_in_mins %></p>
-              <p><strong><%= t(:status) %>:</strong> <%= movie.status %></p>
+              <p><strong><%= t(:status) %>:</strong> <%= movie.status.humanize %></p>
               <div class="text-end">
                 <div class="btn-group">
                   <% if local_assigns[:show_button] %>

@@ -17,6 +17,7 @@ en:
   email: 'Email'
   end_time: 'End Time'
   name: 'Name'
+  not_exist: 'Record not exist'
   log_in: 'Log In'
   log_out: 'Log Out'
   operational: 'Operational'
