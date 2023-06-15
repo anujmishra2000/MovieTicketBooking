@@ -9,7 +9,7 @@ module StoreFront
     private def set_theatre
       @theatre = Theatre.find_by(id: params[:id])
       return unless @theatre.nil?
-      redirect_to movies_path, alert: t(:not_exist)
+      redirect_to movies_path, alert: t('.not_exist')
     end
   end
 end

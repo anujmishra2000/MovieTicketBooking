@@ -1,0 +1,7 @@
+---
+en:
+  store_front:
+    theatres:
+      back: 'Back'
+      not_exist: Theatre does not exit
+      title: 'Theatres'

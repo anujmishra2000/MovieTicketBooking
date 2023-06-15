@@ -17,7 +17,7 @@ module StoreFront
     private def set_movie
       @movie = Movie.find_by(id: params[:id])
       return unless @movie.nil?
-      redirect_to movies_path, alert: t(:not_exist)
+      redirect_to movies_path, alert: t('.not_exist')
     end
   end
 end
