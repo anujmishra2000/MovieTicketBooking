@@ -13,7 +13,7 @@ class Show < ApplicationRecord
   }
 
   def date
-    self.start_time.strftime('%d-%h-%Y')
+    start_time.strftime('%d-%h-%Y')
   end
 
   private def calculate_end_time
