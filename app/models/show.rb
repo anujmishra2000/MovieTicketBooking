@@ -7,6 +7,8 @@ class Show < ApplicationRecord
 
   before_validation :calculate_end_time
 
+  scope :by_date, -> (from, to) { where(start_time: (from..(to.to_date.end_of_day.to_s))) }
+
   enum status: {
     'active': 0,
     'cancelled': 1

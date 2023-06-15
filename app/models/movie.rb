@@ -10,9 +10,16 @@ class Movie < ApplicationRecord
   validates_length_of :title, in: 3..30, message: "should be greater than 3 and less than 30 characters"
 
   enum status: {
-    Upcoming: 0,
-    Live: 1,
-    Expired: 2
+    'upcoming': 0,
+    'live': 1,
+    'expired': 2
   }
 
+  def self.ransackable_associations(auth_object = nil)
+    ["poster_attachment", "poster_blob", "shows", "theatres"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["title", "description"]
+  end
 end

@@ -65,3 +65,21 @@
     height: 1%; }
   *:first-child + html .digg_pagination {
     overflow: hidden; }
+
+    .form-inline .form-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .form-inline .input-group {
+      flex: 1;
+    }
+
+    .form-inline .form-control {
+      border-radius: 0;
+    }
+
+    .form-inline .input-group-append {
+      margin-left: -1px;
+    }
+

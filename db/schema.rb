@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_09_123510) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_122613) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -70,6 +71,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_123510) do
     t.integer "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["description"], name: "trgm_idx_movies_description", opclass: :gin_trgm_ops, using: :gin
+    t.index ["title"], name: "index_movies_on_title", unique: true
   end
 
   create_table "shows", force: :cascade do |t|
@@ -125,4 +128,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_123510) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "countries"
   add_foreign_key "addresses", "theatres"
+  add_foreign_key "shows", "movies"
+  add_foreign_key "shows", "theatres"
 end

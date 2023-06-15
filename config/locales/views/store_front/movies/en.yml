@@ -1,0 +1,7 @@
+---
+en:
+  store_front:
+    movies:
+      back: 'Back'
+      not_exist: Movie does not exit
+      title: 'Movies'
