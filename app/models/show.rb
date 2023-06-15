@@ -17,7 +17,7 @@ class Show < ApplicationRecord
   end
 
   private def calculate_end_time
-    end_time = start_time + movie.duration_in_mins.minutes
+    self.end_time = start_time + movie.duration_in_mins.minutes
   end
 
   private def no_overlapping_shows
