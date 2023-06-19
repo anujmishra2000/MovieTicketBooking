@@ -1,19 +1,32 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-7">
       <div class="card">
         <div class="card-body">
           <div class="row">
-            <div class="col-12">
+            <div class="col-6">
               <h5 class="card-title"><strong><%= t(:theatre) %>:</strong> <%= Theatre.find_by(id: show.theatre_id).name %></h5>
-              <p class="card-text"><strong><%= t(:movie) %>:</strong> <%= Movie.find_by(id: show.movie_id).title %></p>
+            </div>
+            <div class="col-6">
+              <h5 class="card-title"><strong><%= t(:movie) %>:</strong> <%= Movie.find_by(id: show.movie_id).title %></h5>
+            </div>
+          </div><br>
+          <div class="row">
+            <div class="col-6">
               <p class="card-text"><strong><%= t(:show_date) %>:</strong> <%= show.date %></p>
-              <p class="card-text"><strong><%= t(:start_time) %>:</strong> <%= show.start_time.strftime('%I:%M %p') %></p>
-              <p class="card-text"><strong><%= t(:end_time) %>:</strong> <%= show.end_time.strftime('%I:%M %p') %></p>
+            </div>
+            <div class="col-6">
               <p class="card-text"><strong><%= t(:status) %>:</strong> <%= show.status.humanize.upcase %></p>
             </div>
-          </div>
-          <%= button_to t('store_front.shows.book_now'), request.referrer, method: :post, class: "btn btn-primary" %>
+          </div><br>
+          <div class="row">
+            <div class="col-6">
+              <p class="card-text"><strong><%= t(:start_time) %>:</strong> <%= show.time_in_12_hour_format(show.start_time) %></p>
+            </div>
+            <div class="col-6">
+              <p class="card-text"><strong><%= t(:end_time) %>:</strong> <%= show.time_in_12_hour_format(show.end_time) %></p>
+            </div>
+          </div><br>
         </div>
       </div>
     </div>

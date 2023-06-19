@@ -19,45 +19,47 @@
 
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <%= form_with url: movie_path(@movie), method: :get, html: { class: "mb-4" } do |form| %>
               <div class="row">
                 <div class="col">
-                  <div class="form-group">
-                    <%= form.label :from, "From:" %>
+                  <div class="form-group d-flex align-items-center">
+                    <%= form.label :from, "From:", class: "me-2 mb-0" %>
                     <% from_value = params[:from].presence || Time.current.strftime('%Y-%m-%d') %>
                     <%= form.date_field :from, class: "form-control", value: from_value, required: true %>
                   </div>
                 </div>
                 <div class="col">
-                  <div class="form-group">
-                    <%= form.label :to, "To:" %>
+                  <div class="form-group d-flex align-items-center">
+                    <%= form.label :to, "To:", class: "me-2 mb-0"  %>
                     <% to_value = params[:to].presence || 1.week.from_now.strftime('%Y-%m-%d') %>
                     <%= form.date_field :to, class: "form-control", value: to_value, required: true %>
                   </div>
                 </div>
+                <div class="col">
+                  <%= form.submit "Submit", class: "btn btn-primary" %>
+                </div>
               </div>
-              <%= form.submit "Submit", class: "btn btn-primary" %>
             <% end %>
           </div>
         </div>
       </div>
 
-      <% if @movie_theatre_shows.empty? %>
+      <% if @movie_theatres.empty? %>
         <div class="card">
           <div class="card-body text-center">
             <h5>No shows available</h5>
           </div>
         </div><br>
       <% else %>
-        <%@movie_theatre_shows.each_pair do |theatre_id, shows| %>
+        <%@movie_theatres.each do |theatre| %>
           <div class="card mb-3">
             <div class="card-body">
-              <h4 class="card-title"><%= shows.first.theatre.name %></h4>
-              <% shows.sort_by!{|show|show.start_time}.each do |show| %>
-                <%= button_to movie_theatre_show_path(movie_id: @movie.id, theatre_id: theatre_id), method: :get, class: "btn btn-primary mb-1" do %>
+              <h4 class="card-title"><%= theatre.name %></h4>
+              <% theatre.shows.each do |show| %>
+                <%= button_to movie_theatre_show_path(movie_id: @movie.id, theatre_id: theatre.id), method: :get, class: "btn btn-primary mb-1" do %>
                   <%= show.date %>
-                  <%= show.start_time.strftime('%I:%M %p') %>
+                  <%= show.time_in_12_hour_format(show.start_time) %>
                 <% end %>
               <% end %>
             </div>

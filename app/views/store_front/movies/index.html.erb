@@ -3,7 +3,7 @@
   <div class="text-center">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-6">
+        <div class="col-4">
           <%= search_form_for @q, remote: true, html: { class: 'form-inline' } do |f| %>
             <div class="input-group">
               <%= f.search_field :title_or_description_cont, class: 'form-control', placeholder: 'Search Movie' %>

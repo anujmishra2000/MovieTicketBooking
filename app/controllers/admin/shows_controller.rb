@@ -1,9 +1,9 @@
 class Admin::ShowsController < Admin::BaseController
-  before_action :set_show, only: [:show, :edit, :update, :destroy]
-  before_action :load_movies_and_theatres, only: [:edit, :new]
+  before_action :set_show, only: [:show, :edit, :update, :destroy, :cancel, :activate]
+  before_action :load_movies_and_theatres, only: [:edit, :new, :update, :create]
 
   def index
-    @shows = Show.all.paginate(page: params[:page], per_page: ENV['per_page'])
+    @shows = Show.includes(:movie, :theatre).paginate(page: params[:page], per_page: ENV['per_page'])
   end
 
   def show
@@ -41,13 +41,29 @@ class Admin::ShowsController < Admin::BaseController
     end
   end
 
+  def cancel
+    if @show.update(status: 'cancelled')
+      redirect_to admin_shows_path, notice: t('.success')
+    else
+      redirect_to admin_shows_path, alert: t('.failure')
+    end
+  end
+
+  def activate
+    if @show.update(status: 'active')
+      redirect_to admin_shows_path, notice: t('.success')
+    else
+      redirect_to admin_shows_path, alert: t('.failure')
+    end
+  end
+
   private def load_movies_and_theatres
     @live_movies = Movie.where(status: :live).pluck(:title, :id)
     @operational_theatres = Theatre.where(operational: true).pluck(:name, :id)
   end
 
   private def set_show
-    @show = Show.find_by(id: params[:id])
+    @show = Show.includes(:movie, :theatre).find_by(id: params[:id])
     return unless @show.nil?
     redirect_to admin_shows_path, alert: t('.not_exist')
   end

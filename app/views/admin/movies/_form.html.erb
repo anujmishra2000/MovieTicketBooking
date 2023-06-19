@@ -4,35 +4,51 @@
       <%= render 'shared/errors', resource: @movie %>
     <% end %>
 
-    <div class="form-group">
-      <strong><%= form.label :title, t(:title) %>:</strong>
-      <%= form.text_field :title, autofocus: true, class: "form-control", required: true %>
+    <div class="row">
+      <div class="form-group">
+        <strong><%= form.label :title, t(:title) %>:</strong>
+        <%= form.text_field :title, autofocus: true, class: "form-control", required: true %>
+      </div>
     </div><br>
 
-    <div class="form-group">
-      <strong><%= form.label :release_date, t(:release_date) %>:</strong>
-      <%= form.date_field :release_date, class: "form-control", required: true %>
+    <div class="row">
+      <div class="form-group">
+        <strong><%= form.label :description, t(:description) %>:</strong>
+        <%= form.text_area :description, class: "form-control", required: true, style: "height: 100px;" %>
+      </div>
     </div><br>
 
-    <div class="form-group">
-      <strong><%= form.label :description, t(:description) %>:</strong>
-      <%= form.text_area :description, class: "form-control", required: true, style: "height: 100px;" %>
-    </div><br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <strong><%= form.label :release_date, t(:release_date) %>:</strong>
+          <%= form.date_field :release_date, class: "form-control", required: true %>
+        </div><br>
+      </div>
 
-    <div class="form-group">
-      <strong><%= form.label :duration_in_mins, t(:duration_in_mins) %>:</strong>
-      <%= form.number_field :duration_in_mins, class: "form-control", required: true, min: 1 %>
-    </div><br>
+      <div class="col-md-6">
+        <div class="form-group">
+          <strong><%= form.label :duration_in_mins, t(:duration_in_mins) %>:</strong>
+          <%= form.number_field :duration_in_mins, class: "form-control", required: true, min: 1 %>
+        </div><br>
+      </div>
+    </div>
 
-    <div class="form-group">
-      <strong><%= form.label :status, t(:status), class: "form-label" %>:</strong>
-      <%= form.select :status, Movie.statuses.keys, { prompt: 'Select Screen Type' }, class: "form-select", required: true %>
-    </div><br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <strong><%= form.label :status, t(:status), class: "form-label" %>:</strong>
+          <%= form.select :status, Movie.statuses.keys, { prompt: 'Select Screen Type' }, class: "form-select", required: true %>
+        </div><br>
+      </div>
 
-    <div class="form-group">
-      <strong><%= form.label :poster, t('.upload_image'), class: "form-label" %>:</strong>
-      <%= form.file_field :poster, accept: 'image/jpg,image/jpeg', class: "form-control", required: true %>
-    </div><br>
+      <div class="col-md-6">
+        <div class="form-group">
+          <strong><%= form.label :poster, t('.upload_image'), class: "form-label" %>:</strong>
+          <%= form.file_field :poster, accept: 'image/jpg,image/jpeg', class: "form-control", required: true %>
+        </div><br>
+      </div>
+    </div>
 
     <div class="text-center">
       <%= form.submit t(:submit), class: "btn btn-primary" %>

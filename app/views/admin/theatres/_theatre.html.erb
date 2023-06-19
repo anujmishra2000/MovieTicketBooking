@@ -1,31 +1,67 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title text-center"><strong><%= theatre.name %></strong></h5><br>
-          <p class="card-text"><strong><%= t(:screen_type) %>:</strong> <%= theatre.screen_type %></p>
-          <p class="card-text"><strong><%= t(:seating_capacity) %>:</strong> <%= theatre.seating_capacity %></p>
-          <p class="card-text"><strong><%= t(:operational) %>:</strong> <%= theatre.operational? ? 'Yes' : 'No' %></p>
-          <p class="card-text"><strong><%= t(:contact_number) %>:</strong> <%= theatre.contact_number %></p>
-          <p class="card-text"><strong><%= t(:contact_email) %>:</strong> <%= theatre.contact_email %></p>
-          <p class="card-text"><strong><%= t(:street) %>:</strong> <%= theatre.address.street %></p>
-          <p class="card-text"><strong><%= t(:city) %>:</strong> <%= theatre.address.city %></p>
-          <p class="card-text"><strong><%= t(:state) %>:</strong> <%= theatre.address.state %></p>
-          <p class="card-text"><strong><%= t(:country_name) %>:</strong> <%= theatre.address.country.name %></p>
-          <p class="card-text"><strong><%= t(:country_iso) %>:</strong> <%= theatre.address.country.iso_code %></p>
-          <p class="card-text"><strong><%= t(:pincode) %>:</strong> <%= theatre.address.pincode %></p>
-          <td class="actions">
-            <div class="btn-group">
-              <% if local_assigns[:show_button] %>
-                <%= link_to t(:show), admin_theatre_path(theatre), class: "btn btn-primary" %>
-              <% end %>
-              &nbsp;
-              <%= link_to t(:edit), edit_admin_theatre_path(theatre), class: "btn btn-primary" %>
-              &nbsp;
-              <%= button_to t(:destroy), admin_theatre_path(theatre), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          <div class="row">
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:screen_type) %>:</strong> <%= theatre.screen_type.upcase %></p>
             </div>
-          </td>
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:seating_capacity) %>:</strong> <%= theatre.seating_capacity %></p>
+            </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:contact_number) %>:</strong> <%= theatre.contact_number %></p>
+            </div>
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:contact_email) %>:</strong> <%= theatre.contact_email %></p>
+            </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-12">
+              <p class="card-text"><strong><%= t(:street) %>:</strong> <%= theatre.address.street %></p>
+            </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:city) %>:</strong> <%= theatre.address.city %></p>
+            </div>
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:state) %>:</strong> <%= theatre.address.state %></p>
+            </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:country_name) %>:</strong> <%= theatre.address.country.name %></p>
+            </div>
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:country_iso) %>:</strong> <%= theatre.address.country.iso_code %></p>
+            </div>
+          </div><br>
+          <div class="row">
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:pincode) %>:</strong> <%= theatre.address.pincode %></p>
+            </div>
+            <div class="col-md-6">
+              <p class="card-text"><strong><%= t(:operational) %>:</strong> <%= theatre.operational? ? 'Yes' : 'No' %></p>
+            </div>
+          </div><br>
+          <div class="row justify-content-end">
+            <div class="col-auto">
+              <div class="btn-group">
+                <% if local_assigns[:show_button] %>
+                  <%= link_to t(:show), admin_theatre_path(theatre), class: "btn btn-primary" %>
+                <% end %>
+                &nbsp;
+                <%= link_to t(:edit), edit_admin_theatre_path(theatre), class: "btn btn-primary" %>
+                &nbsp;
+                <%= button_to t(:destroy), admin_theatre_path(theatre), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
