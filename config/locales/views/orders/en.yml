@@ -1,0 +1,6 @@
+en:
+  orders:
+    create:
+      failure: Order cannot be created
+      success: Order has been created
+    not_exist: Order does not exist

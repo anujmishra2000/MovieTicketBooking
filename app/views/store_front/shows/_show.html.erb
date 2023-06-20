@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-7">
+    <div class="col-md-9">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -27,6 +27,23 @@
               <p class="card-text"><strong><%= t(:end_time) %>:</strong> <%= show.end_time.strftime('%I:%M %p')) %></p>
             </div>
           </div><br>
+          <div class="row">
+            <div class="col-4">
+              <p class="card-text"><strong><%= t(:price) %>:</strong> <%= show.price %></p>
+            </div>
+            <div class="col-5">
+            <%= form_with(url: orders_path, method: :post, target: "_blank") do |form| %>
+                <div class="form-group  d-flex align-items-center">
+                  <strong><%= form.label :quantity, t(:quantity), class: "form-label" %></strong>
+                  <%= form.select :quantity, options_for_select([1, 2, 3, 4]), { prompt: 'Select' }, class: "form-select", required: true %>
+                  <%= form.hidden_field :show_id, value: show.id %>
+                </div>
+              </div>
+              <div class="col-3 d-flex align-items-center">
+                <%= form.submit t(:add_to_cart), class: "btn btn-primary" %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

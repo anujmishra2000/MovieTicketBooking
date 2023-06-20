@@ -23,4 +23,10 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :orders do
+    get :checkout, on: :member
+  end
+
+  resources :line_items, only: :destroy
 end
