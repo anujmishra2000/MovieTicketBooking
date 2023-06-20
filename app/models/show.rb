@@ -1,4 +1,5 @@
 class Show < ApplicationRecord
+  has_many :line_items, dependent: :restrict_with_error
   belongs_to :movie
   belongs_to :theatre
 

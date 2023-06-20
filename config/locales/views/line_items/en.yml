@@ -1,0 +1,6 @@
+en:
+  line_items:
+    destroy:
+      failure: Line Item was not removed from cart.
+      success: Line Item was removed from cart.
+    not_exist: Line Item does not exist
