@@ -5,10 +5,10 @@
         <div class="card-body">
           <div class="row">
             <div class="col-6">
-              <h5 class="card-title"><strong><%= t(:theatre) %>:</strong> <%= show.theatre.name %></h5>
+              <h5 class="card-title"><strong><%= t(:theatre) %>:</strong> <%= show.theatre_name %></h5>
             </div>
             <div class="col-6">
-              <h5 class="card-title"><strong><%= t(:movie) %>:</strong> <%= show.movie.title %></h5>
+              <h5 class="card-title"><strong><%= t(:movie) %>:</strong> <%= show.movie_title %></h5>
             </div>
           </div><br>
           <div class="row">
@@ -21,10 +21,10 @@
           </div><br>
           <div class="row">
             <div class="col-6">
-              <p class="card-text"><strong><%= t(:start_time) %>:</strong> <%= show.time_in_12_hour_format(show.start_time) %></p>
+              <p class="card-text"><strong><%= t(:start_time) %>:</strong> <%= show.start_time.strftime('%I:%M %p') %></p>
             </div>
             <div class="col-6">
-              <p class="card-text"><strong><%= t(:end_time) %>:</strong> <%= show.time_in_12_hour_format(show.end_time) %></p>
+              <p class="card-text"><strong><%= t(:end_time) %>:</strong> <%= show.end_time.strftime('%I:%M %p') %></p>
             </div>
           </div><br>
           <div class="row justify-content-end">

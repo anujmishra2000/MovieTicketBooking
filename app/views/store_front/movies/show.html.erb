@@ -59,7 +59,7 @@
               <% theatre.shows.each do |show| %>
                 <%= button_to movie_theatre_show_path(movie_id: @movie.id, theatre_id: theatre.id), method: :get, class: "btn btn-primary mb-1" do %>
                   <%= show.date %>
-                  <%= show.time_in_12_hour_format(show.start_time) %>
+                  <%= show.start_time.strftime('%I:%M %p') %>
                 <% end %>
               <% end %>
             </div>

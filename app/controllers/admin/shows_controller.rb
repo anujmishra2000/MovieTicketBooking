@@ -63,7 +63,7 @@ class Admin::ShowsController < Admin::BaseController
   end
 
   private def set_show
-    @show = Show.includes(:movie, :theatre).find_by(id: params[:id])
+    @show = Show.find_by(id: params[:id])
     return unless @show.nil?
     redirect_to admin_shows_path, alert: t('.not_exist')
   end

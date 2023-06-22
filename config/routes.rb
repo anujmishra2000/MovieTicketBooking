@@ -17,8 +17,10 @@ Rails.application.routes.draw do
     resources :theatres
     resources :movies
     resources :shows do
-      patch :cancel, on: :member
-      patch :activate, on: :member
+      member do
+        patch :cancel
+        patch :activate
+      end
     end
   end
 end

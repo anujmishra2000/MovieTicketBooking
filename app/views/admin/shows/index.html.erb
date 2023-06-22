@@ -22,8 +22,8 @@
     <tbody>
       <% @shows.each do |show| %>
         <tr>
-          <td><%= show.theatre.name %></td>
-          <td><%= show.movie.title %></td>
+          <td><%= show.theatre_name %></td>
+          <td><%= show.movie_title %></td>
           <td><%= show.start_time %></td>
           <td><%= show.end_time %></td>
           <td><%= show.status.humanize.upcase %></td>
@@ -38,7 +38,7 @@
               <%= button_to admin_show_path(show), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" do %>
                 <i class="bi bi-trash"></i>
               <% end %>&nbsp;
-              <% if show.status != 'cancelled' %>
+              <% if show.active? %>
                 <%= button_to cancel_admin_show_path(show), method: :patch, class: "btn btn-danger" do %>
                   <i class="bi bi-x-circle-fill"></i>
                 <% end %>

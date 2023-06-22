@@ -8,6 +8,9 @@ class Show < ApplicationRecord
 
   before_validation :calculate_end_time
 
+  delegate :name, to: :theatre, prefix: true
+  delegate :title, to: :movie, prefix: true
+
   enum status: {
     'active': 0,
     'cancelled': 1
@@ -15,10 +18,6 @@ class Show < ApplicationRecord
 
   def date
     start_time.strftime('%d-%h-%Y')
-  end
-
-  def time_in_12_hour_format(time)
-    time.strftime('%I:%M %p')
   end
 
   private def calculate_end_time
