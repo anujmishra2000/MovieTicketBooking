@@ -1,18 +1,18 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: :checkout
+  before_action :set_order, only: :cart
   before_action :set_or_create_order, only: :create
 
   def create
     @order.line_items.destroy_all
     @order.line_items.build(show_id: params[:show_id], quantity: params[:quantity])
     if @order.save
-      redirect_to checkout_order_path(@order)
+      redirect_to cart_order_path(@order)
     else
       redirect_to request.referrer, alert: @order.errors.to_a
     end
   end
 
-  def checkout
+  def cart
   end
 
   private def set_or_create_order
