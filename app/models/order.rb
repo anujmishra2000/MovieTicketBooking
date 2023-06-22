@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   include Numberable
   set_number(letter:'O', length: 6)
   has_many :line_items, dependent: :restrict_with_error
+  has_many :payments, dependent: :restrict_with_error
   belongs_to :user
   belongs_to :cancelled_by_user, class_name: 'User', optional: true
 

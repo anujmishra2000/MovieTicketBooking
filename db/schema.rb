@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_19_063943) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_20_221224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -104,6 +104,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_063943) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.string "number", null: false
+    t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
+    t.datetime "completed_at"
+    t.integer "status", null: false
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+  end
+
   create_table "shows", force: :cascade do |t|
     t.datetime "start_time", null: false
     t.datetime "end_time", null: false
@@ -161,6 +172,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_063943) do
   add_foreign_key "line_items", "shows"
   add_foreign_key "orders", "users"
   add_foreign_key "orders", "users", column: "cancelled_by_user_id"
+  add_foreign_key "payments", "orders"
   add_foreign_key "shows", "movies"
   add_foreign_key "shows", "theatres"
 end

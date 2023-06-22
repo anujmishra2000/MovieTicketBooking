@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
   scope module: :store_front do
     resources :movies, only: [:index, :show] do
       resources :theatres, only: [:show] do
@@ -25,8 +23,16 @@ Rails.application.routes.draw do
   end
 
   resources :orders do
-    get :checkout, on: :member
+    get :cart, on: :member
   end
 
   resources :line_items, only: :destroy
+
+  post 'checkout/:number', to: 'payments#create', as: 'checkout'
+  resources :payments do
+    member do
+      get :success
+      get :cancel
+    end
+  end
 end
