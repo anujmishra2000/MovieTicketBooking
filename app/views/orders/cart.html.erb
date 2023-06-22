@@ -59,8 +59,7 @@
                     <h5 class="text-uppercase"><%= t(:total_price) %></h5>
                     <h5><%= number_to_currency(@order.total, unit: '₹ ') %></h5>
                   </div>
-                  <button type="button" class="btn btn-dark btn-block btn-lg"
-                    data-mdb-ripple-color="dark"><%= t(:proceed_to_pay) %></button>
+                  <%= button_to t(:proceed_to_pay), checkout_path(@order), method: :post, class: 'btn btn-dark btn-block btn-lg', data: { mdb_ripple_color: 'dark' }, params: { payment: { order: @order } } %>
                 </div>
               </div>
             </div>

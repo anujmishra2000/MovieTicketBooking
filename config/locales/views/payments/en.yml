@@ -1,0 +1,10 @@
+en:
+  payments:
+    create:
+      failure: Purchase Unsuccessful
+      success: Purchase Successful
+    not_exist: Payment does not exist
+    payment_error: 'Payment Error: %{error}'
+    success:
+      message: Thanks for Booking!!
+      error: 'Unexpected Error: %{error}'
