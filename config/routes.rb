@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :theatres
     resources :movies
-    resources :shows
+    resources :shows do
+      member do
+        patch :cancel
+        patch :activate
+      end
+    end
   end
 end

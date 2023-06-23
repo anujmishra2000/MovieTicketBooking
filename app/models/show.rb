@@ -4,10 +4,12 @@ class Show < ApplicationRecord
 
   validates :start_time, :end_time, :price, presence: true
   validate :no_overlapping_shows
+  validate :ensure_not_a_past_show, on: :update
 
   before_validation :calculate_end_time
 
-  scope :by_date, -> (from, to) { where(start_time: (from..(to.to_date.end_of_day.to_s))) }
+  delegate :name, to: :theatre, prefix: true
+  delegate :title, to: :movie, prefix: true
 
   enum status: {
     'active': 0,
@@ -20,6 +22,11 @@ class Show < ApplicationRecord
 
   private def calculate_end_time
     self.end_time = start_time + movie.duration_in_mins.minutes
+  end
+
+  private def ensure_not_a_past_show
+    return unless start_time_was < Time.current
+    errors.add(:base, 'Cannot edit past show')
   end
 
   private def no_overlapping_shows

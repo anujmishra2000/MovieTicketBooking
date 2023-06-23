@@ -1,6 +1,6 @@
 class Admin::TheatresController < Admin::BaseController
   before_action :set_theatre, only: [:show, :edit, :update, :destroy]
-  before_action :load_countries, only: [:edit, :new]
+  before_action :load_countries, only: [:edit, :new, :update, :create]
 
   def index
     @theatres = Theatre.all.paginate(page: params[:page], per_page: ENV['per_page'])

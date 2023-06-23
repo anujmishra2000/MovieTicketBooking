@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_122613) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_18_234007) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_122613) do
     t.datetime "start_time", null: false
     t.datetime "end_time", null: false
     t.decimal "price", null: false
-    t.integer "status", null: false
+    t.integer "status", default: 0, null: false
     t.bigint "theatre_id", null: false
     t.bigint "movie_id", null: false
     t.datetime "created_at", null: false

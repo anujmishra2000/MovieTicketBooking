@@ -2,7 +2,13 @@
 en:
   admin:
     shows:
+      activate:
+        failure: Show was not activated.
+        success: Show was activated.
       back: 'Back to Shows'
+      cancel:
+        failure: Show was not cancelled.
+        success: Show was cancelled.
       create:
         success: Show was successfully created
       destroy:

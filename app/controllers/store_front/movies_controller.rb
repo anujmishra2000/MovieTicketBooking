@@ -11,7 +11,7 @@ module StoreFront
     def show
       params[:from] ||= Time.current.strftime('%Y-%m-%d')
       params[:to] ||= 1.week.from_now.strftime('%Y-%m-%d')
-      @movie_theatre_shows = Show.by_date(params[:from], params[:to]).where(movie_id: params[:id]).includes(:theatre).group_by{ |show| show.theatre_id }
+      @movie_theatres = Theatre.includes(:shows).where('shows.movie_id': params[:id], 'shows.start_time': params[:from]..params[:to].to_date.end_of_day.to_s)
     end
 
     private def set_movie
