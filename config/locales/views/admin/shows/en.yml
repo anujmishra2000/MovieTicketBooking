@@ -1,0 +1,17 @@
+---
+en:
+  admin:
+    shows:
+      back: 'Back to Shows'
+      create:
+        success: Show was successfully created
+      destroy:
+        failure: Show was not destroyed.
+        success: Show was successfully destroyed.
+      edit: 'Edit Show'
+      index:
+      new: 'New Show'
+      not_exist: Show does not exit
+      title: 'Shows'
+      update:
+        success: Show was successfully updated.

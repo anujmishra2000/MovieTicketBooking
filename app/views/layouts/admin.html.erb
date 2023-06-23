@@ -18,6 +18,24 @@
         <%= link_to movies_path, class: "navbar-brand text-bg-dark" do %>
                 MovieBooking
         <% end %>
+        <!-- Navbar items on the left -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <%= link_to admin_movies_path, class: "nav-link text-bg-dark" do %>
+                Movies
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to admin_theatres_path, class: "nav-link text-bg-dark" do %>
+              Theatres
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to admin_shows_path, class: "nav-link text-bg-dark" do %>
+              Shows
+            <% end %>
+          </li>
+        </ul>
 
         <!-- Navbar items on the right -->
         <ul class="navbar-nav ml-auto">

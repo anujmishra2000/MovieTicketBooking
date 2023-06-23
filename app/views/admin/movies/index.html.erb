@@ -1,0 +1,46 @@
+<div class="container"><br><br>
+  <h2 class="text-center"><%=t('admin.movies.title')%></h2>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <h2></h2>
+    <%= link_to t('admin.movies.new'), new_admin_movie_path, class: "btn btn-primary float-end" %>
+  </div><br>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= t(:title) %></th>
+        <th><%= t(:release_date) %></th>
+        <th><%= t(:duration_in_mins) %></th>
+        <th><%= t(:status) %></th>
+        <th><%= t(:action) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr>
+          <td><%= movie.title %></td>
+          <td><%= movie.release_date %></td>
+          <td><%= movie.duration_in_mins %></td>
+          <td><%= movie.status.humanize %></td>
+          <td>
+            <div class="btn-group">
+              <%= link_to admin_movie_path(movie), class: "btn btn-primary" do %>
+                <i class="bi bi-eye"></i>
+              <% end %>&nbsp
+              <%= link_to edit_admin_movie_path(movie), class: "btn btn-primary" do %>
+                <i class="bi bi-pencil"></i>
+              <% end %>&nbsp
+              <%= button_to admin_movie_path(movie), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex justify-content-center">
+  <%= will_paginate @movies, class: 'digg_pagination' %>
+</div>

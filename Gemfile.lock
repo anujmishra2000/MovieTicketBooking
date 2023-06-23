@@ -116,6 +116,9 @@ GEM
       activesupport (>= 5.0)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
+    image_processing (1.12.2)
+      mini_magick (>= 4.9.5, < 5)
+      ruby-vips (>= 2.0.17, < 3)
     importmap-rails (1.1.6)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
@@ -138,6 +141,7 @@ GEM
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
+    mini_magick (4.12.0)
     mini_mime (1.1.2)
     minitest (5.18.0)
     msgpack (1.7.1)
@@ -191,6 +195,10 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    ransack (4.0.0)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
+      i18n
     regexp_parser (2.8.0)
     reline (0.3.5)
       io-console (~> 0.5)
@@ -198,6 +206,8 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.2.5)
+    ruby-vips (2.1.4)
+      ffi (~> 1.12)
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -247,8 +257,6 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     will_paginate (4.0.0)
-    will_paginate-bootstrap (1.0.2)
-      will_paginate (>= 3.0.3)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.8)
@@ -264,12 +272,14 @@ DEPENDENCIES
   debug
   devise (~> 4.9.2)
   figaro!
+  image_processing (~> 1.2)
   importmap-rails (~> 1.1.6)
   jbuilder (~> 2.11.5)
   jsbundling-rails (~> 1.1)
   pg (~> 1.5.3)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  ransack (~> 4.0.0)
   sassc-rails
   selenium-webdriver
   sprockets-rails (~> 3.4.2)
@@ -279,7 +289,6 @@ DEPENDENCIES
   web-console
   webdrivers
   will_paginate (~> 4.0)
-  will_paginate-bootstrap
 
 RUBY VERSION
    ruby 3.2.2p53

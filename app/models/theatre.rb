@@ -1,5 +1,8 @@
 class Theatre < ApplicationRecord
+  has_many :shows, dependent: :restrict_with_error
+  has_many :movies, through: :shows
   has_one :address, dependent: :destroy
+
   accepts_nested_attributes_for :address, allow_destroy: true, update_only: true
 
   validates :name, :screen_type, :seating_capacity, :contact_number, :contact_email, presence: true
@@ -7,9 +10,9 @@ class Theatre < ApplicationRecord
   validates :seating_capacity, numericality: { only_integer: true }, allow_blank: true
 
   enum screen_type: {
-    IMAX: 0,
-    HD: 1,
-    '4K_ULTRA': 2
+    'imax': 0,
+    'hd': 1,
+    '4k_ultra': 2
   }
 
 end

@@ -1,0 +1,1 @@
+DESCRIPTION_REGEX = /(\S+ ){19,}\S+ */
