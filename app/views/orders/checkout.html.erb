@@ -11,33 +11,35 @@
                     <h1 class="fw-bold mb-0 text-black"><%= t(:shopping_cart) %></h1>
                     <h6 class="mb-0 text-muted">Items: <%= @order.line_items.size %></h6>
                   </div>
-                  <hr class="my-4">
-                  <div class="row mb-4 d-flex justify-content-between align-items-center">
-                    <div class="col-md-2 col-lg-2 col-xl-2">
-                      <%= image_tag(@order.line_items.first.show.movie.poster, class: "img-fluid movie-image") %>
+                  <% @order.line_items.each do |line_item| %>
+                    <hr class="my-4">
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                      <div class="col-md-2 col-lg-2 col-xl-2">
+                        <%= image_tag(line_item.show.movie.poster, class: "img-fluid movie-image") %>
+                      </div>
+                      <div class="col-md-2 col-lg-2 col-xl-2">
+                        <h6 class="text-muted"><%= t(:movie) %></h6>
+                        <h6 class="text-black mb-0"><%= line_item.show.movie.title %></h6>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-3">
+                        <h6 class="text-muted"><%= t(:theatre) %></h6>
+                        <h6 class="text-black mb-0"><%= line_item.show.theatre.name %></h6>
+                      </div>
+                      <div class="col-md-2 col-lg-2 col-xl-2">
+                        <h6 class="text-muted"><%= t(:quantity) %></h6>
+                        <h6 class="text-black mb-0"><%= line_item.quantity %></h6>
+                      </div>
+                      <div class="col-md-2 col-lg-2 col-xl-2">
+                        <h6 class="text-muted"><%= t(:unit_price) %></h6>
+                        <h6 class="text-black mb-0"><%= line_item.unit_price %></h6>
+                      </div>
+                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <%= button_to line_item_path(line_item), method: :delete, class: 'text-muted', title: 'Remove' do %>
+                          <i class="bi bi-x-lg"></i>
+                        <% end %>
+                      </div>
                     </div>
-                    <div class="col-md-2 col-lg-2 col-xl-2">
-                      <h6 class="text-muted"><%= t(:movie) %></h6>
-                      <h6 class="text-black mb-0"><%= @order.line_items.first.show.movie.title %></h6>
-                    </div>
-                    <div class="col-md-3 col-lg-3 col-xl-3">
-                      <h6 class="text-muted"><%= t(:theatre) %></h6>
-                      <h6 class="text-black mb-0"><%= @order.line_items.first.show.theatre.name %></h6>
-                    </div>
-                    <div class="col-md-2 col-lg-2 col-xl-2">
-                      <h6 class="text-muted"><%= t(:quantity) %></h6>
-                      <h6 class="text-black mb-0"><%= @order.line_items.first.quantity %></h6>
-                    </div>
-                    <div class="col-md-2 col-lg-2 col-xl-2">
-                      <h6 class="text-muted"><%= t(:unit_price) %></h6>
-                      <h6 class="text-black mb-0"><%= @order.line_items.first.unit_price %></h6>
-                    </div>
-                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                      <%= button_to line_item_path(@order.line_items.first), method: :delete, class: 'text-muted', title: 'Remove' do %>
-                        <i class="bi bi-x-lg"></i>
-                      <% end %>
-                    </div>
-                  </div>
+                  <% end %>
                   <hr class="my-4">
                   <div class="pt-5">
                     <h6 class="mb-0">
@@ -55,7 +57,7 @@
                   <hr class="my-4">
                   <div class="d-flex justify-content-between mb-5">
                     <h5 class="text-uppercase"><%= t(:total_price) %></h5>
-                    <h5><%= @order.total%></h5>
+                    <h5><%= number_to_currency(@order.total, unit: '₹ ') %></h5>
                   </div>
                   <button type="button" class="btn btn-dark btn-block btn-lg"
                     data-mdb-ripple-color="dark"><%= t(:proceed_to_pay) %></button>
