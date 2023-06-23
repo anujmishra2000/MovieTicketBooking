@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_063943) do
 
   create_table "line_items", force: :cascade do |t|
     t.integer "quantity", default: 0, null: false
-    t.decimal "unit_price", default: "0.0", null: false
+    t.decimal "unit_price", precision: 10, scale: 2, default: "0.0", null: false
     t.bigint "show_id", null: false
     t.bigint "order_id", null: false
     t.datetime "created_at", null: false
@@ -87,7 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_063943) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.decimal "total", default: "0.0", null: false
+    t.decimal "total", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "completed_at"
     t.datetime "cancelled_at"
     t.string "number", null: false
@@ -98,6 +98,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_063943) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cancelled_by_user_id"], name: "index_orders_on_cancelled_by_user_id"
+    t.index ["completed_at"], name: "index_orders_on_completed_at"
+    t.index ["number"], name: "index_orders_on_number", unique: true
+    t.index ["status"], name: "index_orders_on_status"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
