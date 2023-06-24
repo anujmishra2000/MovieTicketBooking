@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: email_address_with_name('notification@example.com', 'Movie Booking App')
   layout "mailer"
 end
