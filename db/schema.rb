@@ -108,11 +108,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_221224) do
     t.string "number", null: false
     t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "completed_at"
-    t.integer "status", null: false
+    t.integer "status", default: 0, null: false
+    t.string "session_id"
+    t.string "payment_intent"
     t.bigint "order_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["completed_at"], name: "index_payments_on_completed_at"
+    t.index ["number"], name: "index_payments_on_number", unique: true
     t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["payment_intent"], name: "index_payments_on_payment_intent"
+    t.index ["session_id"], name: "index_payments_on_session_id"
+    t.index ["status"], name: "index_payments_on_status"
   end
 
   create_table "shows", force: :cascade do |t|

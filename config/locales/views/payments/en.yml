@@ -8,3 +8,5 @@ en:
     success:
       message: Thanks for Booking!!
       error: 'Unexpected Error: %{error}'
+    cancel:
+      message: Payment was cancelled
