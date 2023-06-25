@@ -2,6 +2,14 @@ class OrdersController < ApplicationController
   before_action :set_order, only: :cart
   before_action :set_or_create_order, only: :create
 
+  def index
+    @orders = current_user.orders.sort_by_most_recent
+  end
+
+  def show
+    @order = current_user.orders.find_by(number: params[:id])
+  end
+
   def create
     @order.line_items.destroy_all
     @order.line_items.build(show_id: params[:show_id], quantity: params[:quantity])

@@ -9,6 +9,7 @@ class Order < ApplicationRecord
   validates :status, :total, presence: true
   validates :total, numericality: { greater_than_or_equal_to: 0, message: 'must be a valid decimal number' }, allow_blank: true
 
+  scope :sort_by_most_recent, -> { order(completed_at: :desc) }
 
   enum status: {
     'in_progress': 0,
