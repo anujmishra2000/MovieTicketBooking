@@ -17,6 +17,16 @@ class Order < ApplicationRecord
     'cancelled': 2
   }
 
+  def cancellable?
+    return true if (6.hours.from_now < earliest_show_start_time)
+    errors.add(:base, 'Show start time is less than 6 hours')
+    false
+  end
+
+  def earliest_show_start_time
+    line_items.joins(:show).minimum(:start_time)
+  end
+
   def to_param
     number
   end
@@ -29,5 +39,13 @@ class Order < ApplicationRecord
     update(completed_at: Time.current)
     completed!
     OrderMailer.with(order: self).confirmed.deliver_later
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["user"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["status"]
   end
 end

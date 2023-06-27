@@ -1,24 +1,25 @@
 <div class="container">
-  <%= link_to t('orders.back'), orders_path, class: "btn btn-secondary position-absolute top-1 start-1 mt-2 ms-2" %>
-  <h1 class="my-4 text-center"><%= t('orders.order_details') %></h1>
+  <%= link_to t('orders.back'), admin_orders_path, class: "btn btn-secondary position-absolute top-1 start-1 mt-2 ms-2" %><br><br><br>
   <div class="card">
     <div class="card-body">
+      <h5 class="card-title"><%= t('orders.order_number') %>: <%= @order.number %></h5>
+      <div class="order-status">
+        <% if @order.completed? %>
+          <span class="badge bg-success"><%= t('orders.completed') %></span>
+        <% elsif @order.cancelled? %>
+          <span class="badge bg-danger"><%= t('orders.cancelled') %></span>
+        <% else %>
+          <span class="badge bg-warning text-dark"><%= t('orders.pending') %></span>
+        <% end %>
+      </div><br>
       <div class="row">
-        <div class="col-md-3">
-        <h5 class="card-title"><%= t('orders.order_number') %>: <%= @order.number %></h5>
+        <div class="col-md-6">
+          <p class="card-text"><b><%= t('.user_name') %>:</b> <%= @order.user.name %></p>
         </div>
         <div class="col-md-6">
-          <div class="order-status">
-            <% if @order.completed? %>
-              <span class="badge bg-success"><%= t('orders.completed') %></span>
-            <% elsif @order.cancelled? %>
-              <span class="badge bg-danger"><%= t('orders.cancelled') %></span>
-            <% else %>
-              <span class="badge bg-warning text-dark"><%= t('orders.pending') %></span>
-            <% end %>
-          </div><br>
+          <p class="card-text"><b><%= t('.user_email') %>:</b> <%= @order.user.email %></p>
         </div>
-      </div>
+      </div><br>
       <div class="row">
         <div class="col-md-6">
           <p class="card-text"><b><%= t('orders.completed_at') %>:</b> <%= @order.completed_at.strftime('%d-%h-%Y %I:%M %p') %></p>
@@ -33,13 +34,11 @@
           <p class="card-text"><b><%= t('orders.total') %>:</b> <%= number_to_currency(@order.total, unit: '₹ ') %></p>
         </div>
       </div><br>
-      <% if @order.cancellable? %>
-        <% unless @order.cancelled? || @order.in_progress? %>
-          <%= button_to refund_payment_path(@order.payments.success&.last), method: :post, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to cancel this order?' } do %>
-            <%= t('orders.cancel_order') %>
-          <% end %>
-        <% end %><br>
-      <% end %>
+      <% unless @order.cancelled? || @order.in_progress? %>
+        <%= button_to refund_admin_order_path(@order.payments.success&.last), method: :post, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to cancel this order?' } do %>
+          <%= t('orders.cancel_order') %>
+        <% end %>
+      <% end %><br>
       <b><%= t('orders.tickets') %>:</b><br><br>
       <% @order.line_items.each do |line_item| %>
         <div class="row mb-4 d-flex justify-content-between align-items-center">

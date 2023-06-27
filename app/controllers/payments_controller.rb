@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
-  before_action :set_payment, only: [:success, :cancel]
+  before_action :set_payment, only: [:success, :cancel, :refund]
+  before_action :set_order, only: :create
 
   def create
     begin

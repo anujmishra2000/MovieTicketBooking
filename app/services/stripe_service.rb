@@ -5,4 +5,11 @@ class StripeService
     payment.update(charge_id: charge.id)
     payment
   end
+
+  def self.create_refund(payment)
+    payment_intent = Stripe::PaymentIntent.retrieve(payment.payment_intent)
+    Stripe::Refund.create({
+      payment_intent: payment_intent
+    })
+  end
 end

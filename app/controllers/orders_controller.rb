@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action :set_or_create_order, only: :create
 
   def index
-    @orders = current_user.orders.sort_by_most_recent
+    @orders = current_user.orders.not_in_progress.sort_by_most_recent
   end
 
   def show

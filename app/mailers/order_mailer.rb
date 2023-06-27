@@ -5,8 +5,14 @@ class OrderMailer < ApplicationMailer
     @order.line_items.each do |line_item|
       attachments.inline["#{line_item.id}.jpg"] = line_item.show.movie.poster.download
     end
-
     mail to: @order.user.email, subject: 'Movie Ticket Booking Confirmation'
+  end
+
+  def cancelled
+    @order.line_items.each do |line_item|
+      attachments.inline["#{line_item.id}.jpg"] = line_item.show.movie.poster.download
+    end
+    mail to: @order.user.email, subject: 'Movie Ticket Booking Cancellation'
   end
 
   private def set_order

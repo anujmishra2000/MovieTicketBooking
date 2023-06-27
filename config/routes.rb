@@ -20,6 +20,9 @@ Rails.application.routes.draw do
         patch :activate
       end
     end
+    resources :orders do
+      post :refund, on: :member
+    end
   end
 
   resources :orders do
@@ -33,6 +36,7 @@ Rails.application.routes.draw do
     member do
       get :success
       get :cancel
+      post :refund
     end
   end
 end
