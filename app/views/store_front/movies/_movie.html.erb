@@ -1,3 +1,8 @@
+<div
+  style="visibility: hidden"
+  id="current_user_id"
+  data="<%= current_user&.id %>"
+></div>
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-10">
@@ -14,6 +19,30 @@
               <p><strong><%= t(:description) %>:</strong> <%= movie.description %></p>
               <p><strong><%= t(:duration_in_mins) %>:</strong> <%= movie.duration_in_mins %></p>
               <p><strong><%= t(:status) %>:</strong> <%= movie.status %></p>
+              <div class="row">
+                <div class="col-md-2">
+                  <% if movie.liked_by_user?(current_user) %>
+                    <%= button_to up_vote_movie_path(movie), method: :post, class: "btn btn-primary", remote: true, id: 'upvote_button' do %>
+                      <%= t(:like) %> <span id='likes'><%= movie.total_likes %></span>
+                    <% end %>
+                  <% else %>
+                    <%= button_to up_vote_movie_path(movie), method: :post, class: "btn btn-light", remote: true, id: 'upvote_button', disabled: current_user.nil?  do %>
+                      <%= t(:like) %> <span id='likes'><%= movie.total_likes %></span>
+                    <% end %>
+                  <% end %>
+                </div>
+                <div class="col-md-3">
+                  <% if movie.disliked_by_user?(current_user) %>
+                    <%= button_to down_vote_movie_path(movie), method: :post, class: "btn btn-danger", remote: true, id: 'downvote_button' do %>
+                      <%= t(:dislike) %> <span id='dislikes'><%= movie.total_dislikes %></span>
+                    <% end %>
+                  <% else %>
+                    <%= button_to down_vote_movie_path(movie), method: :post, class: "btn btn-light", remote: true, id: 'downvote_button', disabled: current_user.nil?  do %>
+                      <%= t(:dislike) %> <span id='dislikes'><%= movie.total_dislikes %></span>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
             </div>
           </div>
         </div>

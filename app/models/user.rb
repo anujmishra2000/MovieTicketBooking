@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :lockable, :confirmable
 
   has_many :orders, dependent: :restrict_with_error
+  has_many :reactions, class_name: 'UserReaction', dependent: :destroy
 
   enum role: { 'customer': 0, 'admin': 1 }
 

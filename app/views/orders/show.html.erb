@@ -1,3 +1,8 @@
+<div
+  style="visibility: hidden"
+  id="current_user_id"
+  data="<%= current_user&.id %>"
+></div>
 <div class="container">
   <%= link_to t('orders.back'), orders_path, class: "btn btn-secondary position-absolute top-1 start-1 mt-2 ms-2" %>
   <h1 class="my-4 text-center"><%= t('orders.order_details') %></h1>
@@ -50,21 +55,48 @@
             <h6 class="text-muted"><%= t(:movie) %></h6>
             <h6 class="text-black mb-0"><%= line_item.show.movie.title %></h6>
           </div>
-          <div class="col-md-2 col-lg-2 col-xl-2">
+          <div class="col-md-1 col-lg-1 col-xl-1">
             <h6 class="text-muted"><%= t(:theatre) %></h6>
             <h6 class="text-black mb-0"><%= line_item.show.theatre.name %></h6>
           </div>
-          <div class="col-md-2 col-lg-2 col-xl-2">
-            <h6 class="text-muted"><%= t(:quantity) %></h6>
+          <div class="col-md-1 col-lg-1 col-xl-1">
+            <h6 class="text-muted"><%= t(:seats) %></h6>
             <h6 class="text-black mb-0"><%= line_item.quantity %></h6>
           </div>
-          <div class="col-md-2 col-lg-2 col-xl-2">
+          <div class="col-md-1 col-lg-1 col-xl-1">
             <h6 class="text-muted"><%= t(:unit_price) %></h6>
             <h6 class="text-black mb-0"><%= line_item.unit_price %></h6>
           </div>
           <div class="col-md-2 col-lg-2 col-xl-2">
             <h6 class="text-muted"><%= t(:show_start_time) %></h6>
             <h6 class="text-black mb-0"><%= line_item.show.start_time.strftime('%d-%h-%Y %I:%M %p') %></h6>
+          </div>
+          <div class="col-md-3 col-lg-3 col-xl-3">
+            <% movie = line_item.show.movie %>
+            <div class="row">
+              <div class="col-md-3">
+                <% if movie.liked_by_user?(current_user) %>
+                  <%= button_to up_vote_movie_path(movie), method: :post, class: "btn btn-primary", remote: true, id: 'upvote_button' do %>
+                    <%= t(:like) %> <span id='likes'><%= movie.total_likes %></span>
+                  <% end %>
+                <% else %>
+                  <%= button_to up_vote_movie_path(movie), method: :post, class: "btn btn-light", remote: true, id: 'upvote_button' do %>
+                    <%= t(:like) %> <span id='likes'><%= movie.total_likes %></span>
+                  <% end %>
+                <% end %>
+              </div>
+              <div class="col-md-3">
+                <% if movie.disliked_by_user?(current_user) %>
+                  <%= button_to down_vote_movie_path(movie), method: :post, class: "btn btn-danger", remote: true, id: 'downvote_button' do %>
+                    <%= t(:dislike) %> <span id='dislikes'><%= movie.total_dislikes %></span>
+                  <% end %>
+                <% else %>
+                  <%= button_to down_vote_movie_path(movie), method: :post, class: "btn btn-light", remote: true, id: 'downvote_button' do %>
+                    <%= t(:dislike) %> <span id='dislikes'><%= movie.total_dislikes %></span>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
       <% end %>

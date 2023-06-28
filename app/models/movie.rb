@@ -1,6 +1,7 @@
 class Movie < ApplicationRecord
   has_many :shows, dependent: :restrict_with_error
   has_many :theatres, through: :shows
+  has_many :user_reactions, as: :reactable
   has_one_attached :poster
 
   validates :title, :release_date, :description, :duration_in_mins, :status, :poster, presence: true
@@ -14,6 +15,22 @@ class Movie < ApplicationRecord
     'live': 1,
     'expired': 2
   }
+
+  def liked_by_user?(user)
+    user_reactions.up_vote.exists?(user: user)
+  end
+
+  def disliked_by_user?(user)
+    user_reactions.down_vote.exists?(user: user)
+  end
+
+  def total_likes
+    user_reactions.up_vote.count
+  end
+
+  def total_dislikes
+    user_reactions.down_vote.count
+  end
 
   def self.ransackable_associations(auth_object = nil)
     ["poster_attachment", "poster_blob", "shows", "theatres"]
