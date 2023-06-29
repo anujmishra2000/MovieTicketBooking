@@ -23,6 +23,17 @@ class OrdersController < ApplicationController
   def cart
   end
 
+  def refund
+    order = Order.find_by(number: params[:id])
+    payment = order.payments.success.last
+    if order.cancellable?
+      OrderRefundService.new(payment).create_refund(auto_cancelled: false)
+      redirect_to order_path(order)
+    else
+      redirect_to order_path(order), alert: t('.cannot_cancel', error: order.errors.to_a.first)
+    end
+  end
+
   private def set_or_create_order
     @order = current_user.orders.in_progress.find_or_create_by({})
   end

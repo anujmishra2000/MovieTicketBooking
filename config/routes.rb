@@ -26,7 +26,10 @@ Rails.application.routes.draw do
   end
 
   resources :orders do
-    get :cart, on: :member
+    member do
+      get :cart
+      post :refund
+    end
   end
 
   resources :line_items, only: :destroy
@@ -36,7 +39,6 @@ Rails.application.routes.draw do
     member do
       get :success
       get :cancel
-      post :refund
     end
   end
 end

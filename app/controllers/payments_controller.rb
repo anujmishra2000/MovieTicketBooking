@@ -1,14 +1,13 @@
 class PaymentsController < ApplicationController
   before_action :set_payment, only: [:success, :cancel, :refund]
-  before_action :set_order, only: :create
 
   def create
     begin
       order = current_user.orders.in_progress.last
       payment = StripeService.create_stripe_charge(order, params[:stripeToken])
       Stripe::Charge.capture(payment.charge_id)
-      payment.marked_as_success
-      payment.order.marked_as_completed
+      payment.mark_as_success
+      payment.order.mark_as_completed
       redirect_to success_payment_path(payment)
     rescue Stripe::StripeError => e
       current_user.orders.in_progress.first.payments.last.failed!

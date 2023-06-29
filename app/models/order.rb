@@ -35,8 +35,15 @@ class Order < ApplicationRecord
     line_items.sum('quantity * unit_price')
   end
 
-  def marked_as_completed
-    update(completed_at: Time.current)
+  def mark_as_cancelled(auto_cancelled:, cancelled_by_user:)
+    touch(:cancelled_at)
+    cancelled!
+    update_columns(auto_cancellation: auto_cancelled, cancelled_by_user_id: cancelled_by_user&.id)
+    OrderMailer.with(order: self).cancelled.deliver_later
+  end
+
+  def mark_as_completed
+    touch(:completed_at)
     completed!
     OrderMailer.with(order: self).confirmed.deliver_later
   end

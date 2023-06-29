@@ -1,6 +1,6 @@
 module Admin
   class OrdersController < Admin::BaseController
-    before_action :set_order, only: :show
+    before_action :set_order, only: [:show, :refund]
 
     def index
       @q = Order.includes(:user).sort_by_most_recent.ransack(params[:q])
@@ -11,14 +11,8 @@ module Admin
     end
 
     def refund
-      payment = Payment.find_by(id: params[:id])
-      stripe_refund = StripeService.create_refund(payment)
-      ActiveRecord::Base.transaction do
-        payment.refunds.credited.create(stripe_refund_id: stripe_refund.id, amount: stripe_refund.amount / 100, completed_at: Time.current)
-        payment.order.cancelled!
-        payment.order.update(cancelled_at: Time.current, auto_cancellation: false, cancelled_by_user_id: current_user.id)
-      end
-      OrderMailer.with(order: @order, refund_id: refund.id).cancelled.deliver_later
+      payment = @order.payments.success.last
+      OrderRefundService.new(payment).create_refund(auto_cancelled: false, cancelled_by_user: current_user)
       redirect_to admin_order_path(payment.order)
     end
 
