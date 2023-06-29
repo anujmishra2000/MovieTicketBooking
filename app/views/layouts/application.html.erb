@@ -10,47 +10,53 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-      <div class="container-fluid">
-        <!-- Brand/logo -->
-        <%= link_to movies_path, class: "navbar-brand text-bg-dark" do %>
-                MovieBooking
-        <% end %>
+    <div class="navbar-container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="container-fluid">
+          <!-- Brand/logo -->
+          <%= link_to movies_path, class: "navbar-brand text-bg-dark" do %>
+            MovieBooking
+          <% end %>
 
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <%= link_to movies_path, class: "nav-link text-bg-dark" do %>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <%= link_to movies_path, class: "nav-link text-bg-dark" do %>
                 Movies
-            <% end %>
-          </li>
-          <li class="nav-item">
-            <%= link_to orders_path, class: "nav-link text-bg-dark" do %>
-                Orders
-            <% end %>
-          </li>
-        </ul>
+              <% end %>
+            </li>
+          </ul>
 
-        <!-- Navbar items on the right -->
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <% if user_signed_in? %>
-              <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-primary mr-2' %>
-            <% else %>
-              <%= link_to t('log_in'), new_user_session_path, class: 'btn btn-primary mr-2' %>
-            <% end %>
-            &nbsp
-          </li>
+          <!-- Navbar items on the right -->
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <% if user_signed_in? %>
+                <a class="dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"  aria-haspopup="true" aria-expanded="false">
+                  <i class="bi bi-person-circle display-6"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown-menu">
+                  <%= link_to 'My Profile', my_profile_path, class: 'dropdown-item' %>
+                  <div class="dropdown-divider"></div>
+                  <%= link_to 'My orders', orders_path, class: 'dropdown-item' %>
+                  <div class="dropdown-divider"></div>
+                  <%= link_to 'Admin End', admin_orders_path, class: 'dropdown-item' %>
+                  <div class="dropdown-divider"></div>
+                  <%= button_to 'Log Out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+                </div>
+              <% else %>
+                <%= link_to t('log_in'), new_user_session_path, class: 'btn btn-primary mr-2' %>
+              <% end %>
+              &nbsp
+            </li>
 
-          <li class="nav-item">
-            <% if user_signed_in? %>
-              <%= button_to t('log_out'), destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
-            <% else %>
-              <%= link_to t('sign_up'), new_user_registration_path, class: 'btn btn-primary' %>
-            <% end %>
-          </li>
-        </ul>
-      </div>
-    </nav>
+            <li class="nav-item">
+              <% unless user_signed_in? %>
+                <%= link_to t('sign_up'), new_user_registration_path, class: 'btn btn-primary' %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
 
     <% if notice.present? %>
       <div class="alert alert-primary">

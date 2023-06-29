@@ -171,7 +171,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_120722) do
     t.index ["reactable_type", "reactable_id"], name: "index_user_reactions_on_reactable"
     t.index ["user_id"], name: "index_user_reactions_on_user_id"
   end
-\
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email", default: "", null: false

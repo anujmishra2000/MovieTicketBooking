@@ -45,4 +45,6 @@ Rails.application.routes.draw do
       get :cancel
     end
   end
+
+  get 'my-profile', to: 'users#show'
 end
