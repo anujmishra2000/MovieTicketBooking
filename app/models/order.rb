@@ -23,4 +23,10 @@ class Order < ApplicationRecord
   def calculate_total
     line_items.sum('quantity * unit_price')
   end
+
+  def marked_as_completed
+    update(completed_at: Time.current)
+    completed!
+    OrderMailer.with(order: self).confirmed.deliver_later
+  end
 end

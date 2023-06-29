@@ -3,29 +3,16 @@ class PaymentsController < ApplicationController
 
   def create
     begin
-      session = StripeService.new(current_user.orders.in_progress.last).create_checkout_session
-      redirect_to session.url, allow_other_host: true
+      order = current_user.orders.in_progress.last
+      payment = StripeService.create_stripe_charge(order, params[:stripeToken])
+      Stripe::Charge.capture(payment.charge_id)
+      payment.marked_as_success
+      payment.order.marked_as_completed
+      redirect_to success_payment_path(payment)
     rescue Stripe::StripeError => e
-      redirect_to root_path, alert: t('.payment_error', error: e.message)
+      current_user.orders.in_progress.first.payments.last.failed!
+      redirect_to request.referrer, alert: t('.payment_error', error: e.message)
     end
-  end
-
-  def success
-    session = Stripe::Checkout::Session.retrieve(@payment.session_id)
-    ActiveRecord::Base.transaction do
-      @payment.update(completed_at: Time.current, payment_intent: session.payment_intent)
-      @payment.success!
-      @payment.order.update(completed_at: Time.current)
-      @payment.order.completed!
-    end
-    OrderMailer.with(order: @payment.order).confirmed.deliver_later
-  rescue => e
-    redirect_to root_path, alert: t('.error', error: e.message)
-  end
-
-  def cancel
-    @payment.failed!
-    redirect_to cart_order_path, alert: t('.message')
   end
 
   private def set_payment

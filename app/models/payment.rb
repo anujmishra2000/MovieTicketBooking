@@ -14,4 +14,8 @@ class Payment < ApplicationRecord
     'failed': 2
   }
 
+  def marked_as_success
+    update(completed_at: Time.current)
+    success!
+  end
 end
