@@ -20,10 +20,16 @@ Rails.application.routes.draw do
         patch :activate
       end
     end
+    resources :orders do
+      post :refund, on: :member
+    end
   end
 
   resources :orders do
-    get :cart, on: :member
+    member do
+      get :cart
+      post :refund
+    end
   end
 
   resources :line_items, only: :destroy

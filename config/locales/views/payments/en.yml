@@ -10,3 +10,6 @@ en:
       error: 'Unexpected Error: %{error}'
     cancel:
       message: Payment was cancelled
+    refund:
+      error: 'Unexpected Error: %{error}'
+      cannot_cancel: 'Order cannot be cancelled due to %{error}'
