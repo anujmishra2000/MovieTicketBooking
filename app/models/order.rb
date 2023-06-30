@@ -9,12 +9,23 @@ class Order < ApplicationRecord
   validates :status, :total, presence: true
   validates :total, numericality: { greater_than_or_equal_to: 0, message: 'must be a valid decimal number' }, allow_blank: true
 
+  scope :sort_by_most_recent, -> { order(completed_at: :desc) }
 
   enum status: {
     'in_progress': 0,
     'completed': 1,
     'cancelled': 2
   }
+
+  def cancellable?
+    return true if (6.hours.from_now < earliest_show_start_time)
+    errors.add(:base, 'Show start time is less than 6 hours')
+    false
+  end
+
+  def earliest_show_start_time
+    line_items.joins(:show).minimum(:start_time)
+  end
 
   def to_param
     number
@@ -24,9 +35,24 @@ class Order < ApplicationRecord
     line_items.sum('quantity * unit_price')
   end
 
-  def marked_as_completed
-    update(completed_at: Time.current)
+  def mark_as_cancelled(auto_cancelled:, cancelled_by_user:)
+    touch(:cancelled_at)
+    cancelled!
+    update_columns(auto_cancellation: auto_cancelled, cancelled_by_user_id: cancelled_by_user&.id)
+    OrderMailer.with(order: self).cancelled.deliver_later
+  end
+
+  def mark_as_completed
+    touch(:completed_at)
     completed!
     OrderMailer.with(order: self).confirmed.deliver_later
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["user"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["status"]
   end
 end

@@ -1,5 +1,5 @@
 en:
-  actions: 'Actions'
+  action: 'Action'
   add_to_cart: Add to Cart
   back: 'Back'
   back_to_home: 'Back To Home'
@@ -20,6 +20,7 @@ en:
   end_time: 'End Time'
   name: 'Name'
   not_exist: 'Record not exist'
+  number: 'Number'
   log_in: 'Log In'
   log_out: 'Log Out'
   movie: 'Movie'
@@ -43,5 +44,7 @@ en:
   summary: 'Summary'
   theatre: 'Theatre'
   title: 'Title'
+  total: 'Total'
   total_price: 'Total Price'
   unit_price: 'Unit Price'
+  user_name: User Name

@@ -1,10 +1,10 @@
-<h1><%= t('.booking_confirmed') %></h1>
+<h1><%= t('.booking_cancelled') %></h1>
 <h3><%= link_to 'Booking Details', order_url(@order) %></h3<br>
 <% @order.line_items.each do |line_item| %>
-  <p><%= image_tag attachments["#{line_item.id}.jpg"].url %><p>
+  <p><%= image_tag attachments["#{line_item.id}.jpg"].url %></p>
   <h2>Movie: <%= line_item.show.movie_title %></h2>
   <h2>Theatre: <%= line_item.show.theatre_name %></h2>
   <p>Number of seats: <%= line_item.quantity %></p>
   <p>Unit Price: <%= line_item.unit_price %></p>
 <% end %><br>
-<h2>Total Amount: <%= @order.total %></h2>
+<h2>Refund Amount: <%= @order.total %></h2>

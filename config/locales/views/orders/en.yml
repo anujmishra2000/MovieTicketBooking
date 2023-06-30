@@ -1,6 +1,18 @@
 en:
   orders:
+    back: Back to Orders
+    cancel_order: Cancel Order
+    cancelled: Cancelled
+    cancelled_at: Cancelled At
+    cancelled_by_user: Cancelled By User
+    completed: Completed
+    completed_at: Completed At
     create:
       failure: Order cannot be created
       success: Order has been created
     not_exist: Order does not exist
+    pending: Pending
+    order_details: Order Details
+    order_number: Order Number
+    tickets: Tickets
+    total: Total

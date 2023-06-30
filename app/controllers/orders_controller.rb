@@ -2,6 +2,14 @@ class OrdersController < ApplicationController
   before_action :set_order, only: :cart
   before_action :set_or_create_order, only: :create
 
+  def index
+    @orders = current_user.orders.not_in_progress.sort_by_most_recent
+  end
+
+  def show
+    @order = current_user.orders.find_by(number: params[:id])
+  end
+
   def create
     @order.line_items.destroy_all
     @order.line_items.build(show_id: params[:show_id], quantity: params[:quantity])
@@ -13,6 +21,17 @@ class OrdersController < ApplicationController
   end
 
   def cart
+  end
+
+  def refund
+    order = Order.find_by(number: params[:id])
+    payment = order.payments.success.last
+    if order.cancellable?
+      OrderRefundService.new(payment).create_refund(auto_cancelled: false)
+      redirect_to order_path(order)
+    else
+      redirect_to order_path(order), alert: t('.cannot_cancel', error: order.errors.to_a.first)
+    end
   end
 
   private def set_or_create_order

@@ -1,0 +1,72 @@
+<div class="container">
+  <%= link_to t('orders.back'), admin_orders_path, class: "btn btn-secondary position-absolute top-1 start-1 mt-2 ms-2" %><br><br><br>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= t('orders.order_number') %>: <%= @order.number %></h5>
+      <div class="order-status">
+        <% if @order.completed? %>
+          <span class="badge bg-success"><%= t('orders.completed') %></span>
+        <% elsif @order.cancelled? %>
+          <span class="badge bg-danger"><%= t('orders.cancelled') %></span>
+        <% else %>
+          <span class="badge bg-warning text-dark"><%= t('orders.pending') %></span>
+        <% end %>
+      </div><br>
+      <div class="row">
+        <div class="col-md-6">
+          <p class="card-text"><b><%= t('.user_name') %>:</b> <%= @order.user.name %></p>
+        </div>
+        <div class="col-md-6">
+          <p class="card-text"><b><%= t('.user_email') %>:</b> <%= @order.user.email %></p>
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="col-md-6">
+          <p class="card-text"><b><%= t('orders.completed_at') %>:</b> <%= @order.completed_at.strftime('%d-%h-%Y %I:%M %p') %></p>
+          <% if @order.cancelled_at? %>
+            <p class="card-text"><b><%= t('orders.cancelled_at') %>:</b> <%= @order.cancelled_at.strftime('%d-%h-%Y %I:%M %p') %></p>
+          <% end %>
+        </div>
+        <div class="col-md-6">
+          <% if @order.cancelled_by_user.present? %>
+            <p class="card-text"><b><%= t('orders.cancelled_by_user') %>:</b> <%= @order.cancelled_by_user.name %></p>
+          <% end %>
+          <p class="card-text"><b><%= t('orders.total') %>:</b> <%= number_to_currency(@order.total, unit: '₹ ') %></p>
+        </div>
+      </div><br>
+      <% if @order.completed? %>
+        <%= button_to refund_admin_order_path(@order), method: :post, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to cancel this order?' } do %>
+          <%= t('orders.cancel_order') %>
+        <% end %>
+      <% end %><br>
+      <b><%= t('orders.tickets') %>:</b><br><br>
+      <% @order.line_items.each do |line_item| %>
+        <div class="row mb-4 d-flex justify-content-between align-items-center">
+          <div class="col-md-2 col-lg-2 col-xl-2">
+            <%= image_tag(line_item.show.movie.poster, class: "img-fluid movie-image") %>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2">
+            <h6 class="text-muted"><%= t(:movie) %></h6>
+            <h6 class="text-black mb-0"><%= line_item.show.movie.title %></h6>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2">
+            <h6 class="text-muted"><%= t(:theatre) %></h6>
+            <h6 class="text-black mb-0"><%= line_item.show.theatre.name %></h6>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2">
+            <h6 class="text-muted"><%= t(:quantity) %></h6>
+            <h6 class="text-black mb-0"><%= line_item.quantity %></h6>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2">
+            <h6 class="text-muted"><%= t(:unit_price) %></h6>
+            <h6 class="text-black mb-0"><%= line_item.unit_price %></h6>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2">
+            <h6 class="text-muted"><%= t(:show_start_time) %></h6>
+            <h6 class="text-black mb-0"><%= line_item.show.start_time.strftime('%d-%h-%Y %I:%M %p') %></h6>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div><br>
