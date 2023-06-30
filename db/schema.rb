@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_20_221224) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_25_214740) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -120,6 +120,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_221224) do
     t.index ["status"], name: "index_payments_on_status"
   end
 
+  create_table "refunds", force: :cascade do |t|
+    t.string "number", null: false
+    t.decimal "amount", precision: 10, scale: 2, default: "0.0", null: false
+    t.datetime "completed_at"
+    t.string "stripe_refund_id"
+    t.integer "status", default: 0, null: false
+    t.bigint "payment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["completed_at"], name: "index_refunds_on_completed_at"
+    t.index ["number"], name: "index_refunds_on_number", unique: true
+    t.index ["payment_id"], name: "index_refunds_on_payment_id"
+    t.index ["status"], name: "index_refunds_on_status"
+    t.index ["stripe_refund_id"], name: "index_refunds_on_stripe_refund_id"
+  end
+
   create_table "shows", force: :cascade do |t|
     t.datetime "start_time", null: false
     t.datetime "end_time", null: false
@@ -178,6 +194,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_221224) do
   add_foreign_key "orders", "users"
   add_foreign_key "orders", "users", column: "cancelled_by_user_id"
   add_foreign_key "payments", "orders"
+  add_foreign_key "refunds", "payments"
   add_foreign_key "shows", "movies"
   add_foreign_key "shows", "theatres"
 end

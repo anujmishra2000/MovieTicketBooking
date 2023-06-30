@@ -4,6 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :lockable, :confirmable
 
   has_many :orders, dependent: :restrict_with_error
-  
+
   enum role: { 'customer': 0, 'admin': 1 }
+
+  def self.ransackable_associations(auth_object = nil)
+    ["orders"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["email"]
+  end
 end
