@@ -8,6 +8,7 @@ class LineItem < ApplicationRecord
 
   before_validation :set_unit_price
   after_commit :update_order_total
+  validate :validate_seats_availability
 
   private def set_unit_price
     return unless show_id.present?
@@ -16,5 +17,11 @@ class LineItem < ApplicationRecord
 
   private def update_order_total
     order.update(total: order.calculate_total)
+  end
+
+  private def validate_seats_availability
+    if quantity > show.seats_available
+      order.errors.add(:base, "Quantity cannot be greater than available seats")
+    end
   end
 end
