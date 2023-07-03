@@ -1,0 +1,8 @@
+<h1> Upcoming Movies</h1>
+<% @upcoming_movies.each_with_index do |movie, index| %>
+  <h2><%= index+1 %>)</h2>
+  <%= image_tag attachments["#{movie.id}.jpg"].url, width: '100px' %>
+  <h2>Movie: <%= movie.title %></h2>
+  <h2>Release Date: <%= movie.release_date %></h2>
+  <h2>Duration(mins): <%= movie.duration_in_mins %></h2>
+<% end %><br>

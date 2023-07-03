@@ -85,3 +85,7 @@ gem 'bootstrap', '~> 5.3.0.alpha3'
 gem 'cssbundling-rails', "~> 1.1"
 
 gem 'jsbundling-rails', "~> 1.1"
+
+gem "sidekiq", "~> 7.1"
+
+gem "sidekiq-scheduler", "~> 5.0"
