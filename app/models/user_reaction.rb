@@ -9,7 +9,23 @@ class UserReaction < ApplicationRecord
     'down_vote': 1
   }
 
+  def self.liked_by_user?(user)
+    up_vote.exists?(user: user)
+  end
+
+  def self.disliked_by_user?(user)
+    down_vote.exists?(user: user)
+  end
+
+  def self.total_likes
+    up_vote.count
+  end
+
+  def self.total_dislikes
+    down_vote.count
+  end
+
   private def broadcast_reaction
-    ActionCable.server.broadcast('reactions_channel', { total_likes: reactable.total_likes, total_dislikes: reactable.total_dislikes, reacted_by: user_id, action: status })
+    ActionCable.server.broadcast('reactions_channel', { total_likes: reactable.user_reactions.total_likes, total_dislikes: reactable.user_reactions.total_dislikes, reacted_by: user_id, action: status, reactable_type: reactable_type, reactable_id: reactable_id })
   end
 end

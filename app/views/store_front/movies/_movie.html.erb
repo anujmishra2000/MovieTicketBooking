@@ -3,6 +3,12 @@
   id="current_user_id"
   data="<%= current_user&.id %>"
 ></div>
+<div
+  style="visibility: hidden"
+  id="reactable"
+  data-reactable-id="<%= movie.id %>"
+  data-reactable-type="Movie"
+></div>
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-10">
@@ -19,27 +25,25 @@
               <p><strong><%= t(:description) %>:</strong> <%= movie.description %></p>
               <p><strong><%= t(:duration_in_mins) %>:</strong> <%= movie.duration_in_mins %></p>
               <p><strong><%= t(:status) %>:</strong> <%= movie.status %></p>
+              <% if movie.user_reactions.liked_by_user?(current_user) %>
+                <% like_btn_class = 'btn btn-primary' %>
+                <% dislike_btn_class = 'btn btn-light' %>
+              <% elsif movie.user_reactions.disliked_by_user?(current_user) %>
+                <% dislike_btn_class = 'btn btn-danger' %>
+                <% like_btn_class = 'btn btn-light' %>
+              <% else %>
+                <% like_btn_class = 'btn btn-light' %>
+                <% dislike_btn_class = 'btn btn-light' %>
+              <% end %>
               <div class="row">
                 <div class="col-md-2">
-                  <% if movie.liked_by_user?(current_user) %>
-                    <%= button_to up_vote_movie_path(movie), method: :post, class: "btn btn-primary", remote: true, id: 'upvote_button' do %>
-                      <%= t(:like) %> | <span id='likes'><%= movie.total_likes %></span>
-                    <% end %>
-                  <% else %>
-                    <%= button_to up_vote_movie_path(movie), method: :post, class: "btn btn-light", remote: true, id: 'upvote_button', disabled: current_user.nil?  do %>
-                      <%= t(:like) %> | <span id='likes'><%= movie.total_likes %></span>
-                    <% end %>
+                  <%= button_to up_vote_user_reaction_path(movie, reactable_type: 'Movie'), method: :post, class: like_btn_class, remote: true, id: 'upvote_button', disabled: current_user.nil? do %>
+                    <%= t(:like) %> | <span id='likes'><%= movie.user_reactions.total_likes %></span>
                   <% end %>
                 </div>
                 <div class="col-md-3">
-                  <% if movie.disliked_by_user?(current_user) %>
-                    <%= button_to down_vote_movie_path(movie), method: :post, class: "btn btn-danger", remote: true, id: 'downvote_button' do %>
-                      <%= t(:dislike) %> | <span id='dislikes'><%= movie.total_dislikes %></span>
-                    <% end %>
-                  <% else %>
-                    <%= button_to down_vote_movie_path(movie), method: :post, class: "btn btn-light", remote: true, id: 'downvote_button', disabled: current_user.nil?  do %>
-                      <%= t(:dislike) %> | <span id='dislikes'><%= movie.total_dislikes %></span>
-                    <% end %>
+                  <%= button_to down_vote_user_reaction_path(movie, reactable_type: 'Movie'), method: :post, class: dislike_btn_class, remote: true, id: 'downvote_button', disabled: current_user.nil?  do %>
+                    <%= t(:dislike) %> | <span id='dislikes'><%= movie.user_reactions.total_dislikes %></span>
                   <% end %>
                 </div>
               </div>

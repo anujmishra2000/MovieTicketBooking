@@ -16,22 +16,6 @@ class Movie < ApplicationRecord
     'expired': 2
   }
 
-  def liked_by_user?(user)
-    user_reactions.up_vote.exists?(user: user)
-  end
-
-  def disliked_by_user?(user)
-    user_reactions.down_vote.exists?(user: user)
-  end
-
-  def total_likes
-    user_reactions.up_vote.count
-  end
-
-  def total_dislikes
-    user_reactions.down_vote.count
-  end
-
   def self.ransackable_associations(auth_object = nil)
     ["poster_attachment", "poster_blob", "shows", "theatres"]
   end

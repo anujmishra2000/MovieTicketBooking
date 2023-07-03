@@ -1,6 +1,6 @@
 module StoreFront
   class MoviesController < StoreFront::BaseController
-    before_action :set_movie, only: [:show, :up_vote, :down_vote]
+    before_action :set_movie, only: :show
     skip_before_action :authenticate_user!
 
     def index
@@ -12,30 +12,6 @@ module StoreFront
       params[:from] ||= Time.current.strftime('%Y-%m-%d')
       params[:to] ||= 1.week.from_now.strftime('%Y-%m-%d')
       @movie_theatres = Theatre.includes(:shows).where('shows.movie_id': params[:id], 'shows.start_time': params[:from]..params[:to].to_date.end_of_day.to_s).distinct
-    end
-
-    def up_vote
-      @reaction = current_user.reactions.find_by(reactable: @movie)
-      if @reaction.nil?
-        @reaction = current_user.reactions.up_vote.create(reactable: @movie)
-      elsif @reaction.up_vote?
-        @reaction.destroy
-      else
-        @reaction.up_vote!
-      end
-      render json: @reaction, status: :created
-    end
-
-    def down_vote
-      @reaction = current_user.reactions.find_by(reactable: @movie)
-      if @reaction.nil?
-        @reaction = current_user.reactions.down_vote.create(reactable: @movie)
-      elsif @reaction.down_vote?
-        @reaction.destroy
-      else
-        @reaction.down_vote!
-      end
-      render json: @reaction, status: :created
     end
 
     private def set_movie

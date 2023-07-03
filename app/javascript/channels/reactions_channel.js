@@ -11,7 +11,9 @@ consumer.subscriptions.create("ReactionsChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    console.log(data);
+    console.log(data.reactable_id);
+    if (document.querySelector('#reactable').getAttribute('data-reactable-id') != String(data.reactable_id)) return;
+    if (document.querySelector('#reactable').getAttribute('data-reactable-type') != String(data.reactable_type)) return;
     let like_panel = document.getElementById('likes')
     like_panel.innerHTML = `${data.total_likes}`
 

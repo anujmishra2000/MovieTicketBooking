@@ -6,10 +6,13 @@ Rails.application.routes.draw do
       resources :theatres, only: [:show] do
         resources :shows, only: [:show]
       end
-      member do
-        post :up_vote
-        post :down_vote
-      end
+    end
+  end
+
+  resources :user_reactions do
+    member do
+      post :up_vote
+      post :down_vote
     end
   end
 
