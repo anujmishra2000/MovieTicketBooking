@@ -25,9 +25,8 @@ class OrdersController < ApplicationController
 
   def refund
     order = Order.find_by(number: params[:id])
-    payment = order.payments.success.last
     if order.cancellable?
-      OrderRefundService.new(payment).create_refund(auto_cancelled: false)
+      OrderRefundService.new(order.id).create_refund(auto_cancelled: false)
       redirect_to order_path(order)
     else
       redirect_to order_path(order), alert: t('.cannot_cancel', error: order.errors.to_a.first)

@@ -1,7 +1,8 @@
 class OrderRefundService
-  def initialize(payment)
-    @payment = payment
-    @order = @payment.order
+  def initialize(order_id)
+    @order = Order.find_by(id: order_id)
+    @payment = @order.payments.success.last
+
   end
 
   def create_refund(auto_cancelled: nil, cancelled_by_user: nil)
