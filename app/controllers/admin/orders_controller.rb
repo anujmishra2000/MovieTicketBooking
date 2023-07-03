@@ -11,9 +11,8 @@ module Admin
     end
 
     def refund
-      payment = @order.payments.success.last
-      OrderRefundService.new(payment).create_refund(auto_cancelled: false, cancelled_by_user: current_user)
-      redirect_to admin_order_path(payment.order)
+      OrderRefundService.new(@order.id).create_refund(auto_cancelled: false, cancelled_by_user: current_user)
+      redirect_to admin_order_path(@order)
     end
 
     private def set_order
