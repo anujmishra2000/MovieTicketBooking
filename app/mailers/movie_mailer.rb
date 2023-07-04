@@ -4,7 +4,7 @@ class MovieMailer < ApplicationMailer
     @upcoming_movies.each do |movie|
       attachments.inline["#{movie.id}.jpg"] = movie.poster.download
     end
-    customer_emails = User.customer.pluck(:email)
-    mail(bcc: customer_emails, subject: 'Upcoming Movies')
+    user = params[:user]
+    mail to: user.email, subject: 'Upcoming Movies'
   end
 end

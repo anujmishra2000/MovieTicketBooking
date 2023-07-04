@@ -1,7 +1,7 @@
 :scheduler:
   :schedule:
     cancel_underoccupied_shows_job:
-      cron: '0 0 * * * *'
+      cron: '0 * * * *'
       class: CancelUnderoccupiedShowsJob
     notify_upcoming_movies_job:
       cron: '0 7 * * 4'
