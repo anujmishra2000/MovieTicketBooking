@@ -50,4 +50,9 @@ Rails.application.routes.draw do
   end
 
   get 'my-profile', to: 'users#show'
+
+  namespace :api do
+    resources :movies
+    resources :orders
+  end
 end
