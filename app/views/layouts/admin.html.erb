@@ -21,6 +21,11 @@
         <!-- Navbar items on the left -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
+            <%= link_to admin_reports_path, class: "nav-link text-bg-dark" do %>
+                Reports
+            <% end %>
+          </li>
+          <li class="nav-item">
             <%= link_to admin_movies_path, class: "nav-link text-bg-dark" do %>
                 Movies
             <% end %>

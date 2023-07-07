@@ -1,0 +1,52 @@
+<div class="container"><br>
+  <h1 class="mb-4 text-center">Theatres Revenue</h1><br>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <%= form_with url: theatres_revenue_admin_reports_path, method: :get, html: { class: "mb-4" } do |form| %>
+          <div class="row">
+            <div class="col">
+              <div class="form-group d-flex align-items-center">
+                <b><%= form.label :from, "From:", class: "me-2 mb-0" %></b>
+                <% from_value = params[:from].presence || Time.current.strftime('%Y-%m-%d') %>
+                <%= form.date_field :from, class: "form-control", value: from_value, required: true %>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group d-flex align-items-center">
+                <b><%= form.label :to, "To:", class: "me-2 mb-0" %></b>
+                <% to_value = params[:to].presence || 1.week.from_now.strftime('%Y-%m-%d') %>
+                <%= form.date_field :to, class: "form-control", value: to_value, required: true %>
+              </div>
+            </div>
+            <div class="col">
+              <%= form.submit "Submit", class: "btn btn-primary" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% if @theatres.present? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Total Paid</th>
+          <th>Refund Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @theatres.each do |theatre| %>
+          <tr>
+            <td><%= theatre.name %></td>
+            <td><%= theatre.total_revenue %></td>
+            <td><%= theatre.total_refund %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No Theatres found.</p>
+  <% end %>
+</div>

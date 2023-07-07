@@ -1,0 +1,19 @@
+<div class="container"><br><br>
+  <h2 class="text-center"><%=t('admin.reports.title')%></h2><br>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= t(:name) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= link_to 'Users amount paid and refunded', users_spendings_admin_reports_path %></td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Theatres revenue', theatres_revenue_admin_reports_path %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

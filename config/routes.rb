@@ -30,6 +30,12 @@ Rails.application.routes.draw do
     resources :orders do
       post :refund, on: :member
     end
+    resources :reports, only: :index do
+      collection do
+        get :users_spendings
+        get :theatres_revenue
+      end
+    end
   end
 
   resources :orders do
