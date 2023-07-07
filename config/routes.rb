@@ -52,7 +52,7 @@ Rails.application.routes.draw do
   get 'my-profile', to: 'users#show'
 
   namespace :api do
-    resources :movies
-    resources :orders
+    resources :movies, only: :index
+    resources :orders, only: :index
   end
 end

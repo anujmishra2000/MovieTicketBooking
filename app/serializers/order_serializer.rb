@@ -1,13 +1,8 @@
 class OrderSerializer < ActiveModel::Serializer
-  attributes :number, :completed_at, :movies
+  attributes :number, :completed_at, :status
+  has_many :movies, serializer: MovieSerializer
 
   def movies
-    object.line_items.map do |line_item|
-      movie = line_item.show.movie
-      {
-        title: movie.title,
-        description: movie.description
-      }
-    end
+    Movie.where(id: object.line_items.joins(:show).select('shows.movie_id'))
   end
 end

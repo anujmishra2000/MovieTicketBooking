@@ -10,7 +10,11 @@ class User < ApplicationRecord
   enum role: { 'customer': 0, 'admin': 1 }
 
   def after_confirmation
-    update(auth_token: generate_token(:auth))
+    assign_auth_token
+  end
+
+  def assign_auth_token
+    update_columns(auth_token: generate_token(:auth))
   end
 
   def self.ransackable_associations(auth_object = nil)
