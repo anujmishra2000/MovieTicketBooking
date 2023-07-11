@@ -9,6 +9,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :user_reactions do
+    member do
+      post :up_vote
+      post :down_vote
+    end
+  end
+
   root 'store_front/movies#index'
 
   namespace :admin do
@@ -41,4 +48,6 @@ Rails.application.routes.draw do
       get :cancel
     end
   end
+
+  get 'my-profile', to: 'users#show'
 end

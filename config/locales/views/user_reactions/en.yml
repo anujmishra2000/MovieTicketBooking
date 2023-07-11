@@ -1,0 +1,3 @@
+en:
+  user_reactions:
+    not_exist: "%{model} does not exist"

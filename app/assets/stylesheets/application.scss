@@ -117,3 +117,13 @@
         border-bottom-right-radius: 16px;
       }
     }
+    .navbar-container {
+      position: relative;
+    }
+
+    .navbar-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      z-index: 1000;
+    }
