@@ -12,6 +12,9 @@ class OrderRefundService
     @order.with_lock do
       @payment.refunds.credited.create(stripe_refund_id: stripe_refund.id, amount: stripe_refund.amount, completed_at: Time.current)
       @order.mark_as_cancelled(auto_cancelled: auto_cancelled, cancelled_by_user: cancelled_by_user)
+      line_item = @order.line_items.first
+      line_item.show.seats_available += line_item.quantity
+      line_item.show.save
     end
   end
 end
