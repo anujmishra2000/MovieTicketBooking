@@ -1,0 +1,12 @@
+<div class="container text-center"><br>
+  <h1 class="mb-4">My Profile</h1>
+  <div class="card d-inline-block">
+    <div class="card-body">
+      <h5 class="card-title">Name: <%= @user.name %></h5>
+      <p class="card-text">Email: <%= @user.email %></p>
+    </div>
+  </div>
+  <div class="text-center mt-3">
+    <%= link_to 'Edit Profile', edit_user_registration_path, class: 'btn btn-primary' %>
+  </div>
+</div>
