@@ -89,3 +89,5 @@ gem 'jsbundling-rails', "~> 1.1"
 gem "sidekiq", "~> 7.1"
 
 gem "sidekiq-scheduler", "~> 5.0"
+
+gem 'active_model_serializers', '~> 0.10.0'
