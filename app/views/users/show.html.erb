@@ -3,7 +3,8 @@
   <div class="card d-inline-block">
     <div class="card-body">
       <h5 class="card-title">Name: <%= @user.name %></h5>
-      <p class="card-text">Email: <%= @user.email %></p>
+      <p class="card-text"><b>Email: </b><%= @user.email %></p>
+      <p class="card-text"><b>Api Token: </b><%= @user.auth_token %></p>
     </div>
   </div>
   <div class="text-center mt-3">

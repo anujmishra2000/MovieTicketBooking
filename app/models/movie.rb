@@ -21,6 +21,6 @@ class Movie < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["title", "description"]
+    ["title", "description", "status"]
   end
 end
