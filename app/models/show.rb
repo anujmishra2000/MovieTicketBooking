@@ -10,6 +10,9 @@ class Show < ApplicationRecord
   before_validation :calculate_end_time
   before_create :set_seats_available
 
+  scope :low_occupancy, -> (max_occupied_ratio = 0.2) { joins(:theatre).where("shows.seats_available > (? * theatres.seating_capacity)", (1 - max_occupied_ratio)) }
+  scope :next_hour, -> { where(start_time: Time.current..(Time.current + 1.hour)) }
+
   delegate :name, to: :theatre, prefix: true
   delegate :title, to: :movie, prefix: true
 
