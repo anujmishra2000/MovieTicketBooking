@@ -8,6 +8,7 @@ class Show < ApplicationRecord
   validate :ensure_not_a_past_show, on: :update
 
   before_validation :calculate_end_time
+  before_create :set_seats_available
 
   delegate :name, to: :theatre, prefix: true
   delegate :title, to: :movie, prefix: true
@@ -28,6 +29,10 @@ class Show < ApplicationRecord
   private def ensure_not_a_past_show
     return unless start_time_was < Time.current
     errors.add(:base, 'Cannot edit past show')
+  end
+
+  private def set_seats_available
+    self.seats_available = theatre.seating_capacity
   end
 
   private def no_overlapping_shows
