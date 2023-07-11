@@ -1,0 +1,2 @@
+class SeatsUnavailableException < Exception
+end

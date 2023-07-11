@@ -38,6 +38,7 @@ en:
   seating_capacity: 'Seating capacity'
   shopping_cart: 'Shopping cart'
   sign_up: 'Sign Up'
+  sold_out: Sold Out
   start_time: 'Start Time'
   state: 'State'
   status: 'Status'

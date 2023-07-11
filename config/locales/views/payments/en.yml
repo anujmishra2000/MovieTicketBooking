@@ -13,3 +13,4 @@ en:
     refund:
       error: 'Unexpected Error: %{error}'
       cannot_cancel: 'Order cannot be cancelled due to %{error}'
+    seats_unavailable: Seats not available
