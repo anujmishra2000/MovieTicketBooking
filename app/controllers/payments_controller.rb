@@ -9,11 +9,10 @@ class PaymentsController < ApplicationController
       current_user.orders.in_progress.first.payments.last.failed!
       return redirect_to cart_order_path(order), alert: t('.payment_error', error: e.message)
     end
-      line_item = order.line_items.first
-      show = line_item.show
-    begin
+    line_item = order.line_items.first
+    show = line_item.show
+    if line_item.quantity <= show.seats_available
       show.with_lock do
-        raise SeatsUnavailableException if line_item.quantity > show.seats_available
         Stripe::Charge.capture(payment.charge_id)
         show.seats_available -= line_item.quantity
         payment.mark_as_success
@@ -21,7 +20,10 @@ class PaymentsController < ApplicationController
         show.save
       end
       redirect_to success_payment_path(payment)
-    rescue SeatsUnavailableException
+    else
+      Stripe::Refund.create({
+        charge: payment.charge_id
+      })
       payment.failed!
       redirect_to root_path, alert: t('.seats_unavailable')
     end
