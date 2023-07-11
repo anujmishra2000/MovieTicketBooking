@@ -3,6 +3,6 @@ class OrderSerializer < ActiveModel::Serializer
   has_many :movies, serializer: MovieSerializer
 
   def movies
-    Movie.where(id: object.line_items.joins(:show).select('shows.movie_id'))
+    object.line_items.map { |line_item| line_item.show.movie }
   end
 end
