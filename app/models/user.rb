@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include Tokenizable
   # Include default devise modules. Others available are:
   # :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :lockable, :confirmable
@@ -7,6 +8,14 @@ class User < ApplicationRecord
   has_many :reactions, class_name: 'UserReaction', dependent: :destroy
 
   enum role: { 'customer': 0, 'admin': 1 }
+
+  def after_confirmation
+    assign_auth_token
+  end
+
+  def assign_auth_token
+    update_columns(auth_token: generate_token(:auth))
+  end
 
   def self.ransackable_associations(auth_object = nil)
     ["orders"]
