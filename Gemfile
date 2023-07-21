@@ -91,3 +91,9 @@ gem "sidekiq", "~> 7.1"
 gem "sidekiq-scheduler", "~> 5.0"
 
 gem 'active_model_serializers', '~> 0.10.0'
+
+gem 'rspec-rails', '~> 4.1.0'
+gem 'shoulda-matchers', '~> 5.0'
+gem 'shoulda-callback-matchers', '~> 1.1.1'
+gem 'rails-controller-testing', '~> 1.0.5'
+gem 'factory_bot_rails', '~> 6.2.0'
