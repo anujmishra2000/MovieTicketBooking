@@ -85,6 +85,9 @@ RSpec.describe Admin::TheatresController, type: :request do
       it "renders the 'new' template" do
         post admin_theatres_path, params: { theatre: { name: '' } }
         expect(response).to render_template(:new)
+        expect(flash[:error]).to include("Name can't be blank", "Screen type can't be blank", "Seating capacity can't be blank",
+        "Contact number can't be blank",
+        "Contact email can't be blank")
       end
     end
   end
@@ -124,6 +127,9 @@ RSpec.describe Admin::TheatresController, type: :request do
       it "renders the 'edit' template" do
         patch admin_theatre_path(theatre), params: { theatre: { name: '' } }
         expect(response).to render_template(:edit)
+        expect(flash[:error]).to include("Name can't be blank", "Screen type can't be blank", "Seating capacity can't be blank",
+        "Contact number can't be blank",
+        "Contact email can't be blank")
       end
     end
   end
