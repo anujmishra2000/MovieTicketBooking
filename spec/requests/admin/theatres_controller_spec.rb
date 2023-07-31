@@ -1,12 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe Admin::TheatresController, type: :request do
-  let(:valid_params) do
+
+  before(:all) do
+    @admin_user = create(:user, :admin)
+    @country = create(:country)
+    @theatre = create(:theatre)
+    @address = create(:address, country: @country, theatre: @theatre)
+    @invalid_params =
+      {
+        theatre: {
+          name: '',
+          screen_type: '',
+          seating_capacity: nil,
+          operational: true,
+          contact_number: '',
+          contact_email: '',
+        }
+      }
+  end
+
+  def valid_params(seating_capacity: 200)
     {
       theatre: {
         name: 'New Theatre',
         screen_type: 'imax',
-        seating_capacity: 200,
+        seating_capacity: seating_capacity,
         operational: true,
         contact_number: '1234567890',
         contact_email: 'test@example.com',
@@ -15,45 +34,24 @@ RSpec.describe Admin::TheatresController, type: :request do
           state: 'Test State',
           city: 'Test City',
           pincode: '123456',
-          country_id: create(:country).id
+          country_id: @country.id
         }
       }
     }
   end
 
-  let(:invalid_params) do
-    {
-      theatre: {
-        name: '',
-        screen_type: '',
-        seating_capacity: nil,
-        operational: true,
-        contact_number: '',
-        contact_email: '',
-      }
-    }
-  end
-
-  before(:all) do
-    @admin_user = create(:user, :admin)
-    @country = create(:country)
-    @theatre = create(:theatre)
-    @address = create(:address, country: @country, theatre: @theatre)
-  end
-
-  before(:each) do
-    sign_in @admin_user
-  end
-
   after(:all) do
-    @admin_user.destroy
-    @address.destroy
-    @country.destroy
-    @theatre.destroy
+    User.delete_all
+    Address.delete_all
+    Country.delete_all
+    Theatre.delete_all
   end
 
   describe "GET #index" do
-    before(:each) { get admin_theatres_path }
+    before(:all) do
+      sign_in @admin_user
+      get admin_theatres_path
+    end
 
     it "should returns a successful response" do
       expect(response).to have_http_status(:success)
@@ -67,6 +65,8 @@ RSpec.describe Admin::TheatresController, type: :request do
 
   describe "GET #show" do
     context "with valid theatre id" do
+      before(:all) { sign_in @admin_user }
+
       it "should returns a successful response" do
         get admin_theatre_path(@theatre)
         expect(response).to have_http_status(:success)
@@ -74,6 +74,8 @@ RSpec.describe Admin::TheatresController, type: :request do
     end
 
     context "with invalid theatre id" do
+      before(:all) { sign_in @admin_user }
+
       it "should redirects to theatre index with alert message" do
         invalid_theatre = @theatre.id + 1
         get admin_theatre_path(invalid_theatre)
@@ -84,7 +86,10 @@ RSpec.describe Admin::TheatresController, type: :request do
   end
 
   describe "GET #new" do
-    before(:each) { get new_admin_theatre_path }
+    before(:all) do
+      sign_in @admin_user
+      get new_admin_theatre_path
+    end
 
     it "should returns http success" do
       expect(response).to have_http_status(:success)
@@ -97,7 +102,8 @@ RSpec.describe Admin::TheatresController, type: :request do
 
   describe "POST #create" do
     context "with valid params" do
-      before(:each) do
+      before(:all) do
+        sign_in @admin_user
         expect {
           post admin_theatres_path, params: valid_params
         }.to change(Theatre, :count).by(1)
@@ -111,16 +117,15 @@ RSpec.describe Admin::TheatresController, type: :request do
 
     context "with invalid params" do
       before(:each) do
+        sign_in @admin_user
         expect {
-          post admin_theatres_path, params: invalid_params
+          post admin_theatres_path, params: @invalid_params
         }.not_to change(Theatre, :count)
       end
 
-      it "should render the 'new' template" do
+      it 'should render new template and display error messages' do
         expect(response).to render_template(:new)
-      end
 
-      it 'should display error messages' do
         expect(flash[:error]).to include("Name can't be blank")
         expect(flash[:error]).to include("Screen type can't be blank")
         expect(flash[:error]).to include("Seating capacity can't be blank")
@@ -131,7 +136,10 @@ RSpec.describe Admin::TheatresController, type: :request do
   end
 
   describe "GET #edit" do
-    before(:each) { get edit_admin_theatre_path(@theatre) }
+    before(:all) do
+      sign_in @admin_user
+      get edit_admin_theatre_path(@theatre)
+    end
 
     it "should returns http success" do
       expect(response).to have_http_status(:success)
@@ -140,14 +148,15 @@ RSpec.describe Admin::TheatresController, type: :request do
 
   describe "PATCH #update" do
     context "with valid params" do
-      let(:new_attributes) do
-        {
-          name: 'Updated Theatre',
-          seating_capacity: 300
-        }
+      before(:all) do
+        sign_in @admin_user
+        @new_attributes =
+          {
+            name: 'Updated Theatre',
+            seating_capacity: 300
+          }
+        patch admin_theatre_path(@theatre), params: { theatre: @new_attributes }
       end
-
-      before(:each) { patch admin_theatre_path(@theatre), params: { theatre: new_attributes } }
 
       it "should updates the requested theatre" do
         @theatre.reload
@@ -163,14 +172,14 @@ RSpec.describe Admin::TheatresController, type: :request do
     end
 
     context "with invalid params" do
-
-      before(:each) { patch admin_theatre_path(@theatre), params: invalid_params }
-
-      it "should renders the 'edit' template" do
-        expect(response).to render_template(:edit)
+      before(:each) do
+        sign_in @admin_user
+        patch admin_theatre_path(@theatre), params: @invalid_params
       end
 
-      it 'should display error messages' do
+      it 'should render edit template and display error messages' do
+        expect(response).to render_template(:edit)
+
         expect(flash[:error]).to include("Name can't be blank")
         expect(flash[:error]).to include("Screen type can't be blank")
         expect(flash[:error]).to include("Seating capacity can't be blank")
@@ -181,15 +190,14 @@ RSpec.describe Admin::TheatresController, type: :request do
 
     context "with invalid params and over seating capacity" do
       before(:each) do
-        invalid_params[:theatre][:seating_capacity] = 505
-        patch admin_theatre_path(@theatre), params: invalid_params
+        sign_in @admin_user
+        @invalid_params[:theatre][:seating_capacity] = 505
+        patch admin_theatre_path(@theatre), params: @invalid_params
       end
 
-      it "should render the 'edit' template" do
+      it 'should render edit template and display error messages' do
         expect(response).to render_template(:edit)
-      end
 
-      it 'should display error messages' do
         expect(flash[:error]).to include("Name can't be blank")
         expect(flash[:error]).to include("Screen type can't be blank")
         expect(flash[:error]).to include("Seating capacity must be less than 500")
@@ -200,7 +208,8 @@ RSpec.describe Admin::TheatresController, type: :request do
   end
 
   describe "DELETE #destroy" do
-    before(:each) do
+    before(:all) do
+      sign_in @admin_user
       expect {
         delete admin_theatre_path(@theatre)
       }.to change(Theatre, :count).by(-1)
