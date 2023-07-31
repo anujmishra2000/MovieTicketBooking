@@ -8,7 +8,7 @@ FactoryBot.define do
 
     trait :admin do
       name { 'admin' }
-      sequence(:email) { |n| "admin_email+#{n}@gmail.com" }
+      sequence(:email) { |n| "admin_email#{n}@gmail.com" }
       password { '1234567' }
       role { 'admin' }
       confirmed_at { Time.current }

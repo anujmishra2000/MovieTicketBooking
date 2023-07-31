@@ -5,6 +5,6 @@ FactoryBot.define do
     seating_capacity { 100 }
     operational { true }
     contact_number { 9876543210 }
-    sequence(:contact_email) { |n| "theatre_email+#{n}@gmail.com" }
+    sequence(:contact_email) { |n| "theatre_email++#{n}@gmail.com" }
   end
 end
