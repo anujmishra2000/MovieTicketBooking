@@ -17,6 +17,7 @@ class Admin::MoviesController < Admin::BaseController
     if @movie.save
       redirect_to admin_movie_path(@movie), notice: t('.success')
     else
+      flash.now[:error] = @movie.errors.to_a
       render :new
     end
   end
@@ -28,6 +29,7 @@ class Admin::MoviesController < Admin::BaseController
     if @movie.update(movie_params)
       redirect_to admin_movie_path, notice: t('.success')
     else
+      flash.now[:error] = @movie.errors.to_a
       render :edit
     end
   end

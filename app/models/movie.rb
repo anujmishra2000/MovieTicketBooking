@@ -8,7 +8,7 @@ class Movie < ApplicationRecord
   validates :title, uniqueness: true
   validates :duration_in_mins, numericality: { greater_than: 0, only_integer: true }, allow_blank: true
   validates :description, format: { with: ::DESCRIPTION_REGEX, message: 'must have at least 20 words' }, allow_blank: true
-  validates_length_of :title, in: 3..30, message: "should be greater than 3 and less than 30 characters"
+  validates_length_of :title, in: 3..30, message: "should be greater than 3 and less than 30 characters", allow_blank: true
 
   enum status: {
     'upcoming': 0,
