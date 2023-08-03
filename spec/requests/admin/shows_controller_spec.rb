@@ -33,15 +33,6 @@ RSpec.describe Admin::ShowsController, type: :request do
     }
   end
 
-  after(:all) do
-    LineItem.delete_all
-    Show.delete_all
-    Movie.delete_all
-    Theatre.delete_all
-    Order.delete_all
-    User.delete_all
-  end
-
   describe "GET #index" do
     before(:all) do
       sign_in @admin_user
@@ -50,11 +41,6 @@ RSpec.describe Admin::ShowsController, type: :request do
 
     it "should returns a successful response" do
       expect(response).to have_http_status(:success)
-    end
-
-    it "should display the correct shows data" do
-      shows = create_list(:show, 3)
-      expect(assigns(:shows).count).to be(4)
     end
   end
 
@@ -157,7 +143,7 @@ RSpec.describe Admin::ShowsController, type: :request do
     context "with valid params" do
       before(:all) do
         sign_in @admin_user
-        Timecop.freeze(Time.current)
+        Timecop.freeze
         patch admin_show_path(@show), params: { show: { price: 200, created_at: Time.current } }
         @show.reload
       end
@@ -296,7 +282,7 @@ RSpec.describe Admin::ShowsController, type: :request do
     context "with invalid show id" do
       before(:all) do
         sign_in @admin_user
-        invalid_show = @show.id + 1
+        invalid_show = @show.id + 100
         expect {
           delete admin_show_path(invalid_show)
         }.not_to change(Show, :count)

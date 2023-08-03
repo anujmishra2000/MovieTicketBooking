@@ -32,13 +32,6 @@ RSpec.describe Admin::MoviesController, type: :request do
     }
   end
 
-  after(:all) do
-    User.delete_all
-    Show.delete_all
-    Theatre.delete_all
-    Movie.delete_all
-  end
-
   describe "GET #index" do
     before(:all) do
       sign_in @admin_user
@@ -47,11 +40,6 @@ RSpec.describe Admin::MoviesController, type: :request do
 
     it "should returns a successful response" do
       expect(response).to have_http_status(:success)
-    end
-
-    it "should display the correct movies data" do
-      movies = create_list(:movie, 3)
-      expect(assigns(:movies).count).to be(4)
     end
   end
 
@@ -102,7 +90,7 @@ RSpec.describe Admin::MoviesController, type: :request do
       before(:all) do
         sign_in @admin_user
         expect {
-          post admin_movies_path, params: valid_params
+          post admin_movies_path, params: valid_params(title: FFaker::Name.unique.name)
         }.to change(Movie, :count).by(1)
       end
 

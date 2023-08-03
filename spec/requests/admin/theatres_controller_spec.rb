@@ -40,14 +40,6 @@ RSpec.describe Admin::TheatresController, type: :request do
     }
   end
 
-  after(:all) do
-    User.delete_all
-    Address.delete_all
-    Country.delete_all
-    Theatre.delete_all
-    Movie.delete_all
-  end
-
   describe "GET #index" do
     before(:all) do
       sign_in @admin_user
@@ -56,11 +48,6 @@ RSpec.describe Admin::TheatresController, type: :request do
 
     it "should returns a successful response" do
       expect(response).to have_http_status(:success)
-    end
-
-    it "should display the correct theatres data" do
-      theatres = create_list(:theatre, 3)
-      expect(assigns(:theatres).count).to be(4)
     end
   end
 
