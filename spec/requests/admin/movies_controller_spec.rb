@@ -24,8 +24,8 @@ RSpec.describe Admin::MoviesController, type: :request do
       movie: {
         title: title,
         release_date: '2023-07-27',
-        description: 'Avengers Infinity War is a 2018 American superhero film based on the Marvel Comics superhero team the Avengers. Produced by Marvel Studios and distributed by Walt Disney Studios Motion Pictures  it is the sequel to The Avengers 2012 and Avengers Age of Ultron 2015 and the 19th film in the Marvel Cinematic Universe',
-        duration_in_mins: 170,
+        description: FFaker::Lorem.sentence(20),
+        duration_in_mins: FFaker::Number.number(digits: 2),
         status: 'live',
         poster: Rack::Test::UploadedFile.new(poster_file, 'image/jpeg')
       }

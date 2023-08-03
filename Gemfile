@@ -78,6 +78,7 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'ffaker', '~> 2.21.0'
 end
 
 gem 'bootstrap', '~> 5.3.0.alpha3'
@@ -97,4 +98,5 @@ gem 'shoulda-matchers', '~> 5.0'
 gem 'shoulda-callback-matchers', '~> 1.1.1'
 gem 'rails-controller-testing', '~> 1.0.5'
 gem 'factory_bot_rails', '~> 6.2.0'
-gem 'ffaker', '~> 2.21.0'
+
+gem "timecop", "~> 0.9.6"

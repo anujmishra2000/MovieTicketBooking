@@ -17,7 +17,7 @@ en:
       edit: 'Edit Show'
       index:
       new: 'New Show'
-      not_exist: Show does not exit
+      not_exist: Show does not exist
       title: 'Shows'
       update:
         success: Show was successfully updated.

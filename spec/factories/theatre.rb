@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :theatre do
-    name { 'Theatre 1' }
+    name { FFaker::Name.name }
     screen_type { 'imax' }
-    seating_capacity { 100 }
+    seating_capacity { FFaker::Number.number(digits: 2) }
     operational { true }
-    contact_number { 9876543210 }
-    sequence(:contact_email) { |n| "theatre_email++#{n}@gmail.com" }
+    contact_number { FFaker::Number.number(digits: 10) }
+    contact_email { FFaker::Internet.unique.email }
   end
 end

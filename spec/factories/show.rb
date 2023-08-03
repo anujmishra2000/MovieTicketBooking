@@ -1,10 +1,9 @@
 FactoryBot.define do
   factory :show do
     start_time { 7.hours.from_now }
-    end_time { 8.hours.from_now }
-    price { 150.0 }
+    price { FFaker::Number.decimal }
     status { 'active' }
-    seats_available { 100 }
+    seats_available { FFaker::Number.number }
     association :theatre
     association :movie
   end
