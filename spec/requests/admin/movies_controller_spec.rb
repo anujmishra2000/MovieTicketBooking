@@ -34,6 +34,8 @@ RSpec.describe Admin::MoviesController, type: :request do
 
   after(:all) do
     User.delete_all
+    Show.delete_all
+    Theatre.delete_all
     Movie.delete_all
   end
 
@@ -55,21 +57,26 @@ RSpec.describe Admin::MoviesController, type: :request do
 
   describe "GET #show" do
     context "with valid movie id" do
-      before(:all) { sign_in @admin_user }
+      before(:all) do
+        sign_in @admin_user
+        get admin_movie_path(@movie)
+      end
 
       it "should returns a successful response" do
-        get admin_movie_path(@movie)
         expect(response).to have_http_status(:success)
       end
     end
 
     context "with invalid movie id" do
-      before(:all) { sign_in @admin_user }
-
-      it "should redirects to movie index with alert message" do
+      before(:all) do
+        sign_in @admin_user
         invalid_movie = @movie.id + 1
         get admin_movie_path(invalid_movie)
+      end
+
+      it "should redirects to movie index with alert message" do
         expect(response).to redirect_to(admin_movies_path)
+
         expect(flash[:alert]).to eq('Movie does not exit')
       end
     end
@@ -123,6 +130,21 @@ RSpec.describe Admin::MoviesController, type: :request do
         expect(flash[:error]).to include("Poster can't be blank")
       end
     end
+
+    context "with when title is unique" do
+      before(:each) do
+        sign_in @admin_user
+        expect {
+          post admin_movies_path, params: valid_params
+        }.not_to change(Movie, :count)
+      end
+
+      it 'should render new template and display error messages' do
+        expect(response).to render_template(:new)
+
+        expect(flash[:error]).to include("Title has already been taken")
+      end
+    end
   end
 
   describe "GET #edit" do
@@ -146,10 +168,10 @@ RSpec.describe Admin::MoviesController, type: :request do
             duration_in_mins: 175
           }
         patch admin_movie_path(@movie), params: { movie: @new_attributes }
+        @movie.reload
       end
 
       it "should updates the requested movie" do
-        @movie.reload
         expect(@movie.title).to eq('Updated Movie')
         expect(@movie.duration_in_mins).to eq(175)
         expect(flash[:notice]).to eq('Movie was successfully updated.')
@@ -177,19 +199,54 @@ RSpec.describe Admin::MoviesController, type: :request do
         expect(flash[:error]).to include("Poster can't be blank")
       end
     end
+
+    context "with invalid title length" do
+      before(:each) do
+        sign_in @admin_user
+        patch admin_movie_path(@movie), params: valid_params(title: 'Av')
+      end
+
+      it 'should render edit template and display error messages' do
+        expect(response).to render_template(:edit)
+
+        expect(flash[:error]).to include("Title should be greater than 3 and less than 30 characters")
+      end
+    end
   end
 
   describe "DELETE #destroy" do
-    before(:all) do
-      sign_in @admin_user
-      expect {
-        delete admin_movie_path(@movie)
-      }.to change(Movie, :count).by(-1)
+    context 'when it has shows' do
+      before(:all) do
+        sign_in @admin_user
+        theatre = create(:theatre)
+        show = create(:show, movie: @movie, theatre: theatre)
+        expect {
+          delete admin_movie_path(@movie)
+        }.not_to change(Movie, :count)
+      end
+
+      after(:all) do
+        Show.delete_all
+      end
+
+      it "should redirects to the movies list with alert notice" do
+        expect(response).to redirect_to(admin_movies_path)
+        expect(flash[:alert]).to eq('Movie was not destroyed.')
+      end
     end
 
-    it "should redirects to the movies list with success notice" do
-      expect(response).to redirect_to(admin_movies_path)
-      expect(flash[:notice]).to eq('Movie was successfully destroyed.')
+    context 'with valid params' do
+      before(:all) do
+        sign_in @admin_user
+        expect {
+          delete admin_movie_path(@movie)
+        }.to change(Movie, :count).by(-1)
+      end
+
+      it "should redirects to the movies list with success notice" do
+        expect(response).to redirect_to(admin_movies_path)
+        expect(flash[:notice]).to eq('Movie was successfully destroyed.')
+      end
     end
   end
 end

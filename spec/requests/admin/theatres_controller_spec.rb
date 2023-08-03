@@ -23,17 +23,17 @@ RSpec.describe Admin::TheatresController, type: :request do
   def valid_params(seating_capacity: 200)
     {
       theatre: {
-        name: 'New Theatre',
+        name: FFaker::Name.name,
         screen_type: 'imax',
         seating_capacity: seating_capacity,
         operational: true,
-        contact_number: '1234567890',
-        contact_email: 'test@example.com',
+        contact_number: FFaker::Number.number(digits: 10),
+        contact_email: FFaker::Internet.unique.email,
         address_attributes: {
-          street: 'Test Street',
-          state: 'Test State',
-          city: 'Test City',
-          pincode: '123456',
+          street: FFaker::Address.street_address,
+          state: FFaker::AddressIN.state,
+          city: FFaker::AddressIN.city,
+          pincode: FFaker::Number.number(digits: 6),
           country_id: @country.id
         }
       }
@@ -45,6 +45,7 @@ RSpec.describe Admin::TheatresController, type: :request do
     Address.delete_all
     Country.delete_all
     Theatre.delete_all
+    Movie.delete_all
   end
 
   describe "GET #index" do
@@ -65,21 +66,26 @@ RSpec.describe Admin::TheatresController, type: :request do
 
   describe "GET #show" do
     context "with valid theatre id" do
-      before(:all) { sign_in @admin_user }
+      before(:all) do
+        sign_in @admin_user
+        get admin_theatre_path(@theatre)
+      end
 
       it "should returns a successful response" do
-        get admin_theatre_path(@theatre)
         expect(response).to have_http_status(:success)
       end
     end
 
     context "with invalid theatre id" do
-      before(:all) { sign_in @admin_user }
-
-      it "should redirects to theatre index with alert message" do
+      before(:all) do
+        sign_in @admin_user
         invalid_theatre = @theatre.id + 1
         get admin_theatre_path(invalid_theatre)
+      end
+
+      it "should redirects to theatre index with alert message" do
         expect(response).to redirect_to(admin_theatres_path)
+
         expect(flash[:alert]).to eq('Theatre does not exit')
       end
     end
@@ -156,10 +162,10 @@ RSpec.describe Admin::TheatresController, type: :request do
             seating_capacity: 300
           }
         patch admin_theatre_path(@theatre), params: { theatre: @new_attributes }
+        @theatre.reload
       end
 
       it "should updates the requested theatre" do
-        @theatre.reload
         expect(@theatre.name).to eq('Updated Theatre')
         expect(@theatre.seating_capacity).to eq(300)
         expect(flash[:notice]).to eq('Theatre was successfully updated.')
@@ -208,16 +214,38 @@ RSpec.describe Admin::TheatresController, type: :request do
   end
 
   describe "DELETE #destroy" do
-    before(:all) do
-      sign_in @admin_user
-      expect {
-        delete admin_theatre_path(@theatre)
-      }.to change(Theatre, :count).by(-1)
+    context 'when it has shows' do
+      before(:all) do
+        sign_in @admin_user
+        movie = create(:movie)
+        show = create(:show, movie: movie, theatre: @theatre)
+        expect {
+          delete admin_theatre_path(@theatre)
+        }.not_to change(Theatre, :count)
+      end
+
+      after(:all) do
+        Show.delete_all
+      end
+
+      it "should redirects to the theatres list with alert notice" do
+        expect(response).to redirect_to(admin_theatres_path)
+        expect(flash[:alert]).to eq('Theatre was not destroyed.')
+      end
     end
 
-    it "should redirects to the theatres list with success notice" do
-      expect(response).to redirect_to(admin_theatres_path)
-      expect(flash[:notice]).to eq('Theatre was successfully destroyed.')
+    context 'when destroyed' do
+      before(:all) do
+        sign_in @admin_user
+        expect {
+          delete admin_theatre_path(@theatre)
+        }.to change(Theatre, :count).by(-1)
+      end
+
+      it "should redirects to the theatres list with success notice" do
+        expect(response).to redirect_to(admin_theatres_path)
+        expect(flash[:notice]).to eq('Theatre was successfully destroyed.')
+      end
     end
   end
 end
