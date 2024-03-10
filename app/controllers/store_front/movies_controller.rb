@@ -4,7 +4,7 @@ module StoreFront
     skip_before_action :authenticate_user!
 
     def index
-      @q = Movie.includes(:poster_attachment).order(release_date: :desc).where(status: [:live, :upcoming]).ransack(params[:q])
+      @q = Movie.includes(poster_attachment: :blob).order(release_date: :desc).where(status: [:live, :upcoming]).ransack(params[:q])
       @movies = @q.result(distinct: true).paginate(page: params[:page], per_page: ENV['per_page'])
     end
 

@@ -38,8 +38,10 @@
                   <div class="dropdown-divider"></div>
                   <%= link_to 'My orders', orders_path, class: 'dropdown-item' %>
                   <div class="dropdown-divider"></div>
-                  <%= link_to 'Admin End', admin_orders_path, class: 'dropdown-item' %>
-                  <div class="dropdown-divider"></div>
+                  <% if current_user.admin? %>
+                    <%= link_to 'Admin End', admin_orders_path, class: 'dropdown-item' %>
+                    <div class="dropdown-divider"></div>
+                  <% end %>
                   <%= button_to 'Log Out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
                 </div>
               <% else %>

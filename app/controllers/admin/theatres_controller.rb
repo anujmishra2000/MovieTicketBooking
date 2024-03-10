@@ -19,6 +19,7 @@ class Admin::TheatresController < Admin::BaseController
     if @theatre.save
       redirect_to admin_theatre_path(@theatre), notice: t('.success')
     else
+      flash.now[:error] = @theatre.errors.to_a
       render :new
     end
   end
@@ -30,6 +31,7 @@ class Admin::TheatresController < Admin::BaseController
     if @theatre.update(theatre_params)
       redirect_to admin_theatre_path, notice: t('.success')
     else
+      flash.now[:error] = @theatre.errors.to_a
       render :edit
     end
   end

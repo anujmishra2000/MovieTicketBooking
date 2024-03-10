@@ -3,7 +3,7 @@ class Show < ApplicationRecord
   belongs_to :movie
   belongs_to :theatre
 
-  validates :start_time, :end_time, :price, presence: true
+  validates :start_time, :price, presence: true
   validate :no_overlapping_shows
   validate :ensure_not_a_past_show, on: :update
 
@@ -26,7 +26,7 @@ class Show < ApplicationRecord
   end
 
   private def calculate_end_time
-    self.end_time = start_time + movie.duration_in_mins.minutes
+    self.end_time = start_time + movie.duration_in_mins.minutes if start_time
   end
 
   private def ensure_not_a_past_show

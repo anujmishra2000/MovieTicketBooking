@@ -18,6 +18,7 @@ class Admin::ShowsController < Admin::BaseController
     if @show.save
       redirect_to admin_show_path(@show), notice: t('.success')
     else
+      flash.now[:error] = @show.errors.to_a
       render :new
     end
   end
@@ -29,6 +30,7 @@ class Admin::ShowsController < Admin::BaseController
     if @show.update(show_params)
       redirect_to admin_show_path, notice: t('.success')
     else
+      flash.now[:error] = @show.errors.to_a
       render :edit
     end
   end
@@ -69,6 +71,6 @@ class Admin::ShowsController < Admin::BaseController
   end
 
   private def show_params
-    params.require(:show).permit(:theatre_id, :movie_id, :start_time, :price, :status)
+    params.require(:show).permit(:theatre_id, :movie_id, :start_time, :price, :status, :created_at)
   end
 end
